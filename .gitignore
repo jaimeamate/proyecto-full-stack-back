@@ -1,0 +1,20 @@
+# Directorios que no se deben seguir
+node_modules/
+coverage/
+dist/
+.env
+.cache/
+npm-debug.log
+yarn-lock.json
+yarn.lock
+build/
+
+# Archivos que no se deben seguir
+*.tmp
+*.log
+*.sqlite
+
+# Archivos de configuración específicos del editor
+# (ajusta según tu editor)
+.vscode/
+.idea/
