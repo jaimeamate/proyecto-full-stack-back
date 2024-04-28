@@ -1,7 +1,6 @@
 # Proyecto Full-Stack Backend
 
 ## Estructura del Proyecto
-/proyecto
 **public**  # Archivos estáticos como imágenes, scripts de frontend, y CSS
 **routes**  # Definiciones de rutas
 **models**  # Modelos de datos 
