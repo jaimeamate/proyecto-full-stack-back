@@ -29,6 +29,7 @@
     "@middlewares": "./middleware",
     "@controllers": "./controllers",
     "@routes": "./routes",
-    "@services": "./services"
+    "@services": "./services",
+    "@configs": "./configs"
   }
 }
