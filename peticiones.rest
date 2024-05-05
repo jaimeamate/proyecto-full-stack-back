@@ -16,6 +16,31 @@ Content-Type: application/json
 GET http://localhost:3000/api/user/
 
 ### Obtener usuario por su id
-GET http://localhost:3000/api/user/3
+GET http://localhost:3000/api/user/1
+
+
+### Modificar usuario put
+PUT http://localhost:3000/api/user/1
+Content-Type: application/json
+
+{
+  "firstName": "Mariano",
+  "lastName": "Villalba",
+  "phoneNumber": "66666666666",
+  "email": "peperod@gmail.com",
+  "password": "123456"
+}
+
+
+### Modificar usuario patch
+PATCH http://localhost:3000/api/user/1
+Content-Type: application/json
+
+{
+  "lastName": "Martinez",
+  "phoneNumber": "88232542588"
+}
+
+
 
 ##############################    ENDPOINTS USER    ##############################

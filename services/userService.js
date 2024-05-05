@@ -33,5 +33,37 @@ const getUserByEmail = async (email) => {
         throw err;
     }
 }
+const editUserPut = async(userId, updatedFields) =>{
+    try{
+        const user = await User.findByPk(userId);
+        if (!user) {
+            throw new Error('User not found');
+        }
+        Object.keys(updatedFields).forEach(key => {
+            if (updatedFields[key] !== undefined){
+                user[key] = updatedFields[key];
+            }else{
+                throw new Error('All fields are required');
+            }
+        })
+        return await user.save();
+    }catch(err){
+        throw err;
+    }
+}
 
-module.exports = {  getAllUsers, getUserWithId, getUserByEmail };
+const editUserPatch = async (userId, updatedFields) => {
+    try{
+        const user = await User.findByPk(userId);
+        if (!user) {
+            throw new Error('User not found');
+        }
+        Object.keys(updatedFields).forEach(key => {
+            user[key] = updatedFields[key];
+        })
+        return await user.save();
+    }catch(err){
+        throw err;
+    }
+}
+module.exports = {  getAllUsers, getUserWithId, getUserByEmail, editUserPut, editUserPatch };
