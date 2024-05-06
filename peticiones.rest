@@ -8,7 +8,7 @@ Content-Type: application/json
   "firstName": "Pepe",
   "lastName": "Rodriguez",
   "phoneNumber": "66666666666",
-  "email": "peperod@gmail.com",
+  "email": "pepdderod@gmail.com",
   "password": "123456"
 }
 
@@ -43,4 +43,17 @@ Content-Type: application/json
 
 
 
+
 ##############################    ENDPOINTS USER    ##############################
+
+##############################    ENDPOINTS GROUPS    ##############################
+
+POST http://localhost:3000/api/group/register
+Content-Type: application/json
+
+{
+  "name": "Viaje Mar del Plata",
+}
+
+###OBTENER GRUPOS
+GET http://localhost:3000/api/group/
