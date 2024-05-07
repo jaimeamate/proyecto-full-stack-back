@@ -6,7 +6,7 @@ const {
 const httpStatus = require("@configs/httpStatusCode.json");
 
 const getGroups = async (req, res) => {
-  console.log("***ESTOY EN CONTROLLER****");
+  console.log("***ESTOY EN CONT ROLLER****");
   try {
     const groups = await getAllGroups();
     res.status(200).json(users);
