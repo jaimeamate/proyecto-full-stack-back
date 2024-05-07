@@ -1,11 +1,10 @@
 const Group = require("@models/groupModel");
 
 const getAllGroups = async () => {
-  console.log("ESTOY EN GET ALL*******");
   try {
     return await Group.findAll();
   } catch (err) {
-    console.log("### ESTO ES UN ERROR");
+    console.log(err);
     throw err;
   }
 };
@@ -22,13 +21,12 @@ const getGroupWithId = async (id) => {
   }
 };
 
-const registerGroup = async ({ name }) => {
+const registerGroup = async (name) => {
   try {
-    const newGroup = new Group({
-      name,
-    });
+    const newGroup = new Group(name);
     return await newGroup.save();
   } catch (err) {
+    console.log(err);
     throw err;
   }
 };

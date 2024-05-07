@@ -11,6 +11,8 @@ router.get("/", getGroups);
 //Obtiene grupo por id
 router.get("/:id", getGroupById);
 
-router.post("/register", createGroup);
+// router.post("/register", createGroup);
+router.post('/register', createGroup);
+
 
 module.exports = router;

@@ -48,11 +48,12 @@ Content-Type: application/json
 
 ##############################    ENDPOINTS GROUPS    ##############################
 
+### Crear grupos
 POST http://localhost:3000/api/group/register
 Content-Type: application/json
 
 {
-  "name": "Viaje Mar del Plata",
+  "name": "Viaje Mar del Plata"
 }
 
 ###OBTENER GRUPOS

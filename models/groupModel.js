@@ -8,14 +8,13 @@ const Group = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
   },
-  { timestamps: false }
+  {  timestamps: false }
 );
 
 module.exports = Group;

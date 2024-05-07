@@ -6,10 +6,9 @@ const {
 const httpStatus = require("@configs/httpStatusCode.json");
 
 const getGroups = async (req, res) => {
-  console.log("***ESTOY EN CONT ROLLER****");
   try {
     const groups = await getAllGroups();
-    res.status(200).json(users);
+    res.status(200).json(groups);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -19,7 +18,7 @@ const getGroupById = async (req, res) => {
   try {
     const group = await getGroupWithId(req.params.id);
     if (group) {
-      res.status(200).json(user);
+      res.status(200).json(group);
     } else {
       res.status(404).json({ error: httpStatus["404"] });
     }
@@ -29,7 +28,6 @@ const getGroupById = async (req, res) => {
 };
 
 const createGroup = async (req, res) => {
-  console.log("****LLEGUE A CREAR");
   try {
     const result = await registerGroup(req.body);
     res.status(202).status(201).json(result);
