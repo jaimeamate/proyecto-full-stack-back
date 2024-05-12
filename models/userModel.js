@@ -31,13 +31,13 @@ const User = sequelize.define("User", {
 
 }, {
     hooks:{
-        //Antes de guardar un usuario se comprueba si tiene pass y si la tiene la encripta.
+        // Antes de guardar un usuario se comprueba si tiene pass y si la tiene la encripta.
         beforeSave: async (user) => {
             if(user.password){
                 // Genera una cadena aleatoria que se utiliza para alterar el proceso de cifrado
-                //Evita ataques de fuerza bruta dos contraseñas idénticas darán hashes diferentes
+                // Evita ataques de fuerza bruta dos contraseñas idénticas darán hashes diferentes
                 const salt = await bcrypt.genSalt(10);
-                //Ciframos la contraseña
+                // Ciframos la contraseña
                 user.password = await bcrypt.hash(user.password, salt);
             }
         }

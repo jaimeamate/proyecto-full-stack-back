@@ -5,10 +5,10 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "Pepe",
-  "lastName": "Rodriguez",
+  "firstName": "JwtUser",
+  "lastName": "Apellido prueba",
   "phoneNumber": "66666666666",
-  "email": "peperod@gmail.com",
+  "email": "jwttest@gmail.com",
   "password": "123456"
 }
 
@@ -16,7 +16,7 @@ Content-Type: application/json
 GET http://localhost:3000/api/user/
 
 ### Obtener usuario por su id
-GET http://localhost:3000/api/user/1
+GET http://localhost:3000/api/user/7
 
 
 ### Modificar usuario put
@@ -41,6 +41,14 @@ Content-Type: application/json
   "phoneNumber": "88232542588"
 }
 
+### Login que devuelve el jwt
+### Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
 
+{
+  "email": "jwttest@gmail.com",
+  "password": "123456"
+}
 
 ##############################    ENDPOINTS USER    ##############################
