@@ -11,11 +11,11 @@ const getAllGroups = async () => {
 
 const getGroupWithId = async (id) => {
   try {
-    const user = await Group.findByPk(id);
-    if (!user) {
+    const group = await Group.findByPk(id);
+    if (!group) {
       throw new Error("Group not found");
     }
-    return user;
+    return group;
   } catch (err) {
     throw err;
   }
@@ -31,4 +31,38 @@ const registerGroup = async (name) => {
   }
 };
 
-module.exports = { getAllGroups, getGroupWithId, registerGroup };
+const editGroupPatch = async (groupId, updatedFields) => {
+  try {
+    const group = await Group.findByPk(groupId);
+    if (!group) {
+      throw new Error("Group not found");
+    }
+    Object.keys(updatedFields).forEach((key) => {
+      group[key] = updatedFields[key];
+    });
+    return await group.save();
+  } catch (err) {
+    throw err;
+  }
+};
+
+const deleteGroupById = async (id) => {
+  try {
+    const group = await Group.findByPk(id);
+    if (!group) {
+      throw new Error("Group not found");
+    }
+    await group.destroy();
+    return { message: "Group deleted successfully" };
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = {
+  getAllGroups,
+  getGroupWithId,
+  registerGroup,
+  editGroupPatch,
+  deleteGroupById,
+};

@@ -53,8 +53,27 @@ POST http://localhost:3000/api/group/register
 Content-Type: application/json
 
 {
-  "name": "Viaje Mar del Plata"
+  "name": "Viaje Cordoba"
 }
 
 ###OBTENER GRUPOS
 GET http://localhost:3000/api/group/
+
+
+### Obtener GRUPO por su id
+GET http://localhost:3000/api/group/4
+
+
+
+### Modificar GRUPO patch
+PATCH http://localhost:3000/api/group/4
+Content-Type: application/json
+
+{
+  "name": "Viaje Rio Turbio"
+  
+}
+
+### Modificar GRUPO patch
+DELETE  http://localhost:3000/api/group/4
+

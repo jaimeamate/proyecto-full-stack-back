@@ -2,6 +2,8 @@ const {
   getGroupWithId,
   getAllGroups,
   registerGroup,
+  editGroupPatch,
+  deleteGroupById,
 } = require("@services/groupService");
 const httpStatus = require("@configs/httpStatusCode.json");
 
@@ -37,4 +39,29 @@ const createGroup = async (req, res) => {
   }
 };
 
-module.exports = { getGroups, getGroupById, createGroup };
+const updateGroupPatch = async (req, res) => {
+  try {
+    res.status(200).json(await editGroupPatch(req.params.id, req.body));
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+};
+
+const deleteGroup = async (req, res) => {
+  try {
+    res.status(200).json(await deleteGroupById(req.params.id));
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+};
+
+module.exports = {
+  getGroups,
+  getGroupById,
+  createGroup,
+  updateGroupPatch,
+  deleteGroup,
+};

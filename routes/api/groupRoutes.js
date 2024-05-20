@@ -3,7 +3,9 @@ const {
   getGroups,
   getGroupById,
   createGroup,
-} = require("@controllers/groupController");
+  updateGroupPatch,
+  deleteGroup,
+} = require("@controllers/groupController.js");
 
 //Obtiene los grupos
 router.get("/", getGroups);
@@ -12,7 +14,12 @@ router.get("/", getGroups);
 router.get("/:id", getGroupById);
 
 // router.post("/register", createGroup);
-router.post('/register', createGroup);
+router.post("/register", createGroup);
 
+//Actualiza el grupo con PATCH
+router.patch("/:id", updateGroupPatch);
+
+//Borra el grupo
+router.delete("/:id", deleteGroup);
 
 module.exports = router;
