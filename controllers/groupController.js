@@ -8,12 +8,8 @@ const {
 const httpStatus = require("@configs/httpStatusCode.json");
 
 const getGroups = async (req, res) => {
-  try {
     const groups = await getAllGroups();
     res.status(200).json(groups);
-  } catch (err) {
-    res.status(500).json(err);
-  }
 };
 
 const getGroupById = async (req, res) => {

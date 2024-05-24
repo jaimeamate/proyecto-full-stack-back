@@ -2,7 +2,11 @@ const Group = require("@models/groupModel");
 
 const getAllGroups = async () => {
   try {
-    return await Group.findAll();
+    const groups = await Group.findAll();
+    if(groups.length !== 0) {
+      return groups;
+    }
+    return {};
   } catch (err) {
     console.log(err);
     throw err;
