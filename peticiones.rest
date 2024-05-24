@@ -5,18 +5,21 @@ POST http://localhost:3030/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "Mariano",
-  "lastName": "Sanchez",
-  "phoneNumber": "66666666",
-  "email": "Mariano@gmail.com1",
-  "pass": "985668"
+  "firstName": "JwtUser1",
+  "lastName": "Apellido prueba",
+  "phoneNumber": "66666666666",
+  "email": "pepdderod@gmail.com",
+  "password": "123456"
+
 }
 
 ### Obtener usuarios
 GET http://localhost:3030/api/user/
 
 ### Obtener usuario por su id
-GET http://localhost:3030/api/user/2
+
+GET http://localhost:3000/api/user/7
+
 
 
 ### Modificar usuario put
@@ -41,6 +44,15 @@ Content-Type: application/json
   "phoneNumber": "88232542588"
 }
 
+### Login que devuelve el jwt
+### Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "jwttest@gmail.com",
+  "password": "123456"
+}
 
 ################## ACTIVITIES  ##################
 
@@ -85,4 +97,39 @@ Content-Type: application/json
   "amount": "213"
 }
 
+### Obtener usuarios con jwt
+GET http://localhost:3000/api/user/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJlbWFpbCI6Imp3dHRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNTUzODU0MCwiZXhwIjoxNzE1NTQyMTQwfQ.acg58ni5p1k1D-Q_7Lxt3dSH1Un23IiHQVWCqtA_BkM
 ##############################    ENDPOINTS USER    ##############################
+
+##############################    ENDPOINTS GROUPS    ##############################
+
+### Crear grupos
+POST http://localhost:3000/api/group/register
+Content-Type: application/json
+
+{
+  "name": "Viaje Cordoba"
+}
+
+###OBTENER GRUPOS
+GET http://localhost:3000/api/group/
+
+
+### Obtener GRUPO por su id
+GET http://localhost:3000/api/group/4
+
+
+
+### Modificar GRUPO patch
+PATCH http://localhost:3000/api/group/4
+Content-Type: application/json
+
+{
+  "name": "Viaje Rio Turbio"
+  
+}
+
+### Modificar GRUPO patch
+DELETE  http://localhost:3000/api/group/4
+
