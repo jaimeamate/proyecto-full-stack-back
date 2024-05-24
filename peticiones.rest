@@ -1,26 +1,26 @@
 ##############################    ENDPOINTS USER    ##############################
 
 ### Crear / Registrar usuario
-POST http://localhost:3000/api/auth/register
+POST http://localhost:3030/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "Pepe",
-  "lastName": "Rodriguez",
-  "phoneNumber": "66666666666",
-  "email": "peperod@gmail.com",
-  "password": "123456"
+  "firstName": "Mariano",
+  "lastName": "Sanchez",
+  "phoneNumber": "66666666",
+  "email": "Mariano@gmail.com1",
+  "pass": "985668"
 }
 
 ### Obtener usuarios
-GET http://localhost:3000/api/user/
+GET http://localhost:3030/api/user/
 
 ### Obtener usuario por su id
-GET http://localhost:3000/api/user/1
+GET http://localhost:3030/api/user/2
 
 
 ### Modificar usuario put
-PUT http://localhost:3000/api/user/1
+PUT http://localhost:3030/api/user/3
 Content-Type: application/json
 
 {
@@ -28,12 +28,12 @@ Content-Type: application/json
   "lastName": "Villalba",
   "phoneNumber": "66666666666",
   "email": "peperod@gmail.com",
-  "password": "123456"
+  "pass": "123456"
 }
 
 
 ### Modificar usuario patch
-PATCH http://localhost:3000/api/user/1
+PATCH http://localhost:3030/api/user/5
 Content-Type: application/json
 
 {
@@ -42,5 +42,47 @@ Content-Type: application/json
 }
 
 
+################## ACTIVITIES  ##################
+
+### Crear / Registrar actividades
+POST http://localhost:3030/api/act/register
+Content-Type: application/json
+
+{
+ "name": "Vacaciones verano",
+  "amount": "222",
+  "type": "1",
+  "date": "2024-05-01"
+}
+
+
+
+
+### Obtener actividades
+GET http://localhost:3030/api/activity/
+
+### Obtener actividades por su id
+GET http://localhost:3030/api/activity/3
+
+
+### Modificar actividades put
+PUT http://localhost:3030/api/activity/3
+Content-Type: application/json
+
+{
+  "name": "Vacaciones Ibiza",
+  "amount": "333",
+  "type": "0",
+  "date": "2023-08-01"
+}
+
+### Modificar actividades patch
+PATCH http://localhost:3030/api/activity/1
+Content-Type: application/json
+
+{
+ "name": "Vacaciones Marbella",
+  "amount": "213"
+}
 
 ##############################    ENDPOINTS USER    ##############################
