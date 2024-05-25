@@ -1,4 +1,5 @@
-const { getAllActivity, getActivityWithId, editActivityPatch, editActivityPut, registerActivity } = require('@services/activityService');
+const { getAllActivity, getActivityWithId, editActivityPatch, editActivityPut,
+    registerActivity, deleteActivityById } = require('@services/activityService');
 const httpStatus = require('@configs/httpStatusCode.json');
 
 
@@ -55,4 +56,17 @@ const createActivity = async (req, res) => {
     }
 }
 
-module.exports = { getActivities, getActivitiesById, updateActivitiesPatch, updateActivitiesPut, createActivity };
+const deleteActivity = async (req, res) => {
+    try {
+        const result = await deleteActivityById(req.params.id);
+        res.status(200).json(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+};
+
+module.exports = {
+    getActivities, getActivitiesById, updateActivitiesPatch,
+    updateActivitiesPut, createActivity, deleteActivity,
+};

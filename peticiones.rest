@@ -5,11 +5,11 @@ POST http://localhost:3030/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "JwtUser1",
-  "lastName": "Apellido prueba",
-  "phoneNumber": "66666666666",
-  "email": "pepdderod@gmail.com",
-  "password": "123456"
+  "firstName": "pepas",
+  "lastName": "antonia",
+  "phoneNumber": "123456789",
+  "email": "pepasas@gmail.com",
+  "password": "1111"
 
 }
 
@@ -18,20 +18,20 @@ GET http://localhost:3030/api/user/
 
 ### Obtener usuario por su id
 
-GET http://localhost:3000/api/user/7
+GET http://localhost:3030/api/user/14
 
 
 
 ### Modificar usuario put
-PUT http://localhost:3030/api/user/3
+PUT http://localhost:3030/api/user/5
 Content-Type: application/json
 
 {
-  "firstName": "Mariano",
-  "lastName": "Villalba",
-  "phoneNumber": "66666666666",
-  "email": "peperod@gmail.com",
-  "pass": "123456"
+  "firstName": "antonio",
+  "lastName": "toni",
+  "phoneNumber": "111111111",
+  "email": "antonio@gmail.com",
+  "pass": "1111"
 }
 
 
@@ -46,22 +46,28 @@ Content-Type: application/json
 
 ### Login que devuelve el jwt
 ### Login
-POST http://localhost:3000/api/auth/login
+POST http://localhost:3030/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "jwttest@gmail.com",
+  "email": "pepdderodaaa@gmail.com",
   "password": "123456"
 }
+
+### Obtener usuarios con jwt
+GET http://localhost:3030/api/user/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJlbWFpbCI6Imp3dHRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNTUzODU0MCwiZXhwIjoxNzE1NTQyMTQwfQ.acg58ni5p1k1D-Q_7Lxt3dSH1Un23IiHQVWCqtA_BkM
+
 
 ################## ACTIVITIES  ##################
 
 ### Crear / Registrar actividades
-POST http://localhost:3030/api/act/register
+POST http://localhost:3030/api/activity/register
 Content-Type: application/json
 
 {
- "name": "Vacaciones verano",
+  "idGroup": 1,
+ "name": "Vacas1",
   "amount": "222",
   "type": "1",
   "date": "2024-05-01"
@@ -74,11 +80,11 @@ Content-Type: application/json
 GET http://localhost:3030/api/activity/
 
 ### Obtener actividades por su id
-GET http://localhost:3030/api/activity/3
+GET http://localhost:3030/api/activity/1
 
 
 ### Modificar actividades put
-PUT http://localhost:3030/api/activity/3
+PUT http://localhost:3030/api/activity/1
 Content-Type: application/json
 
 {
@@ -97,32 +103,33 @@ Content-Type: application/json
   "amount": "213"
 }
 
-### Obtener usuarios con jwt
-GET http://localhost:3000/api/user/
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJlbWFpbCI6Imp3dHRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNTUzODU0MCwiZXhwIjoxNzE1NTQyMTQwfQ.acg58ni5p1k1D-Q_7Lxt3dSH1Un23IiHQVWCqtA_BkM
+### eliminar actividad 
+DELETE  http://localhost:3030/api/activity/1
+
+
 ##############################    ENDPOINTS USER    ##############################
 
 ##############################    ENDPOINTS GROUPS    ##############################
 
 ### Crear grupos
-POST http://localhost:3000/api/group/register
+POST http://localhost:3030/api/group/register
 Content-Type: application/json
 
 {
-  "name": "Viaje Cordoba"
+  "name": "Viajeros"
 }
 
 ###OBTENER GRUPOS
-GET http://localhost:3000/api/group/
+GET http://localhost:3030/api/group/
 
 
 ### Obtener GRUPO por su id
-GET http://localhost:3000/api/group/4
+GET http://localhost:3030/api/group/1
 
 
 
 ### Modificar GRUPO patch
-PATCH http://localhost:3000/api/group/4
+PATCH http://localhost:3030/api/group/1
 Content-Type: application/json
 
 {
@@ -131,5 +138,5 @@ Content-Type: application/json
 }
 
 ### Modificar GRUPO patch
-DELETE  http://localhost:3000/api/group/4
+DELETE  http://localhost:3030/api/group/12
 

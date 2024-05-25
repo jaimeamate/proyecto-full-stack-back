@@ -8,8 +8,8 @@ const {
 const httpStatus = require("@configs/httpStatusCode.json");
 
 const getGroups = async (req, res) => {
-    const groups = await getAllGroups();
-    res.status(200).json(groups);
+  const groups = await getAllGroups();
+  res.status(200).json(groups);
 };
 
 const getGroupById = async (req, res) => {
@@ -46,13 +46,14 @@ const updateGroupPatch = async (req, res) => {
 
 const deleteGroup = async (req, res) => {
   try {
-    res.status(200).json(await deleteGroupById(req.params.id));
+    const result = await deleteGroupById(req.params.id);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
   }
 };
+
 
 module.exports = {
   getGroups,

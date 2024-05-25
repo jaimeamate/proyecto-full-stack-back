@@ -2,12 +2,16 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require("@configs/dbConfig");
 
-const Activity = User = sequelize.define("Activity", {
+const Activity = sequelize.define("Activity", {
     //id_activity: {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false,
+    },
+    idGroup: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     name: {

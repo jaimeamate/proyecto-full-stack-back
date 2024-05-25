@@ -9,24 +9,25 @@ const getAllActivity = async () => {
     }
 }
 
-const getActivityWithId = async (id_activity) => {
+const getActivityWithId = async (id) => {
     try {
-        const activity = await Activity.findByPk(id_activity);
+        const activity = await Activity.findByPk(id);
+        if (!activity) {
+            console.log("eror");
+            throw new Error('Activity not found');
+
+        }
+        return activity;
+    } catch (err) {
+        throw err;
+    }
+}
+
+const getActivityByIdGroup = async (id) => {
+    try {
+        const activity = await Activity.findOne({ where: { id: id } });
         if (!activity) {
             throw new Error('Activity not found');
-            console.log("eror");
-        }
-        return activity;
-    } catch (err) {
-        throw err;
-    }
-}
-
-const getActivityByIdGroup = async (id_grupo) => {
-    try {
-        const activity = await Activity.findOne({ where: { id_grupo: id_grupo } });
-        if (!activity) {
-            throw new Error('User not found');
         }
         return activity;
     } catch (err) {
@@ -35,9 +36,9 @@ const getActivityByIdGroup = async (id_grupo) => {
 }
 
 
-const editActivityPut = async (id_activity, updatedFields) => {
+const editActivityPut = async (id, updatedFields) => {
     try {
-        const activity = await Activity.findByPk(id_activity);
+        const activity = await Activity.findByPk(id);
         if (!activity) {
             throw new Error('Activity not found');
         }
@@ -54,9 +55,9 @@ const editActivityPut = async (id_activity, updatedFields) => {
     }
 }
 
-const editActivityPatch = async (id_activity, updatedFields) => {
+const editActivityPatch = async (id, updatedFields) => {
     try {
-        const activity = await Activity.findByPk(id_activity);
+        const activity = await Activity.findByPk(id);
         if (!activity) {
             throw new Error('activity not found');
         }
@@ -69,9 +70,9 @@ const editActivityPatch = async (id_activity, updatedFields) => {
     }
 }
 
-const registerActivity = async ({ name, amount, type, date }) => {
+const registerActivity = async ({ idGroup, name, amount, type, date }) => {
     try {
-        const newActivity = new Activity({ name, amount, type, date });
+        const newActivity = new Activity({ idGroup, name, amount, type, date });
         return await newActivity.save();
     } catch (err) {
         console.log(err);
@@ -80,4 +81,22 @@ const registerActivity = async ({ name, amount, type, date }) => {
     }
 }
 
-module.exports = { getAllActivity, getActivityWithId, getActivityByIdGroup, editActivityPut, editActivityPatch, registerActivity };
+const deleteActivityById = async (id) => {
+    try {
+        const activity = await Activity.findByPk(id);
+        if (!activity) {
+            throw new Error("activity not found");
+        }
+        await activity.destroy();
+        return { message: "activity deleted successfully" };
+    } catch (err) {
+        throw err;
+    }
+};
+
+
+
+module.exports = {
+    getAllActivity, getActivityWithId, getActivityByIdGroup,
+    editActivityPut, editActivityPatch, registerActivity, deleteActivityById
+};

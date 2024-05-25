@@ -3,7 +3,7 @@
 
 const router = require("express").Router();
 const { getActivities, getActivitiesById, updateActivitiesPut,
-    updateActivitiesPatch, createActivity } = require("@controllers/activityController");
+    updateActivitiesPatch, createActivity, deleteActivity } = require("@controllers/activityController");
 
 //obtiene todas las actividades 
 router.get("/", getActivities);
@@ -20,9 +20,10 @@ router.put('/:id', updateActivitiesPatch);
 router.patch('/:id', updateActivitiesPut);
 
 
-router.post('/', createActivity);
+router.post('/register', createActivity);
 
-
+//Borra el grupo
+router.delete("/:id", deleteActivity);
 
 
 module.exports = router;
