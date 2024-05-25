@@ -116,7 +116,7 @@ POST http://localhost:3030/api/group/register
 Content-Type: application/json
 
 {
-  "name": "Viajeros"
+  "name": "Viajeros por el mundo"
 }
 
 ###OBTENER GRUPOS
