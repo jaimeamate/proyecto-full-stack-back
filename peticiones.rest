@@ -5,10 +5,10 @@ POST http://localhost:3030/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "pepas",
-  "lastName": "antonia",
+  "firstName": "paepas",
+  "lastName": "antoania",
   "phoneNumber": "123456789",
-  "email": "pepasas@gmail.com",
+  "email": "pepasas@gmaaail.com",
   "password": "1111"
 
 }

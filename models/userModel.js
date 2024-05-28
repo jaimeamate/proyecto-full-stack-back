@@ -44,4 +44,7 @@ const User = sequelize.define("User", {
     },
     timestamps: false });
 
+User.associate = (models) =>{
+    User.belongsToMany(models.Activity, { through: models.UsersHasActivities, foreignKey: 'idUser'});
+}
 module.exports = User;
