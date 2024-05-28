@@ -8,7 +8,7 @@ Content-Type: application/json
   "firstName": "pepas",
   "lastName": "antonia",
   "phoneNumber": "123456789",
-  "email": "pepasadddd22s@gmail.com",
+  "email": "pepasas@gmail.com",
   "password": "1111"
 
 }
@@ -84,7 +84,7 @@ GET http://localhost:3030/api/activity/1
 
 
 ### Modificar actividades put
-PUT http://localhost:3030/api/activity/8
+PUT http://localhost:3030/api/activity/1
 Content-Type: application/json
 
 {
@@ -104,7 +104,7 @@ Content-Type: application/json
 }
 
 ### eliminar actividad 
-DELETE  http://localhost:3030/api/activity/9
+DELETE  http://localhost:3030/api/activity/1
 
 
 ##############################    ENDPOINTS USER    ##############################
@@ -116,7 +116,7 @@ POST http://localhost:3030/api/group/register
 Content-Type: application/json
 
 {
-  "name": "Viajeros por el mundo"
+  "name": "Viajeros"
 }
 
 ###OBTENER GRUPOS
