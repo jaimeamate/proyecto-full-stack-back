@@ -27,13 +27,17 @@ const User = sequelize.define("User", {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    ind_baja: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
     }
 
 }, {
     hooks:{
         // Antes de guardar un usuario se comprueba si tiene pass y si la tiene la encripta.
         beforeSave: async (user) => {
-            if(user.password){
+            if (user.changed('password')) {
                 // Genera una cadena aleatoria que se utiliza para alterar el proceso de cifrado
                 // Evita ataques de fuerza bruta dos contraseñas idénticas darán hashes diferentes
                 const salt = await bcrypt.genSalt(10);
