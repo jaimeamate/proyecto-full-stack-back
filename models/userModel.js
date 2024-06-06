@@ -27,6 +27,10 @@ const User = sequelize.define("User", {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    ind_baja: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
     }
 
 }, {
