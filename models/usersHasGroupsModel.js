@@ -14,6 +14,6 @@ const UsersHasGroups = sequelize.define('users_has_groups', {
 },{
     freezeTableName: true,
     timestamps: false
-});
+}, {  timestamps: false });
 
 module.exports = UsersHasGroups;

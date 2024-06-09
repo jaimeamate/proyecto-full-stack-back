@@ -3,7 +3,6 @@ const { DataTypes } = require('sequelize');
 const sequelize = require("@configs/dbConfig");
 
 const Activity = sequelize.define("Activity", {
-    //id_activity: {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

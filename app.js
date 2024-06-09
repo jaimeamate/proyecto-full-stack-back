@@ -19,19 +19,28 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', apiRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
-// db.sequelize.sync({ force: false }).then(() => {
-//     console.log('Database synchronized');
-// }).catch(err => {
-//     console.error('Unable to connect to the database:', err);
-// });
+const {sequelize} = require("@models/index");
+// sequelize.sync()
+//     .then(() => {
+//         app.listen(process.env.PORT || 3000, () => {
+//             console.log(`Server is running on port ${process.env.PORT || 3000}`);
+//         });
+//     })
+//     .catch(err => {
+//         console.error('Unable to connect to the database:', err);
+//     });
+sequelize.sync({ force: false }).then(() => {
+    console.log('Database synchronized');
+}).catch(err => {
+    console.error('Unable to connect to the database:', err);
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
