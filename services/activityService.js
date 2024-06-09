@@ -1,5 +1,5 @@
 
-const Activity = require("@models/activityModel");
+const Activity = require("@models/index");
 
 const getAllActivity = async () => {
     try {
@@ -15,7 +15,6 @@ const getActivityWithId = async (id) => {
         if (!activity) {
             console.log("eror");
             throw new Error('Activity not found');
-
         }
         return activity;
     } catch (err) {

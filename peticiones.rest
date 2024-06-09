@@ -5,10 +5,10 @@ POST http://localhost:3030/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "pepas",
-  "lastName": "antonia",
+  "firstName": "paepas",
+  "lastName": "antoania",
   "phoneNumber": "123456789",
-  "email": "pepasas@gmail.com",
+  "email": "pepasas@gmaaail.com",
   "password": "1111"
 
 }
@@ -154,6 +154,10 @@ Content-Type: application/json
     "text": "esto es una prueba desde Outlook11"
 }
 
+### Añade usuarios a una activdad
+POST http://localhost:3030/api/activity/add-users
+Content-Type: application/json
+
 ### Envío de correo de prueba desde Gmail
 POST http://localhost:3031/api/mail/send
 Content-Type: application/json
@@ -165,4 +169,9 @@ Content-Type: application/json
     "to": "destinatario@ejemplo.com",
     "subject": "prueba desde Gmail",
     "text": "esto es una prueba desde Gmail"
+}
+
+{
+    "activityId": 5,
+    "userIds": [6, 7, 9, 10]
 }
