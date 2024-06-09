@@ -1,8 +1,8 @@
 const User = require('@models/userModel');
 const Group = require('@models/groupModel');
 const Activity = require('@models/activityModel');
-const UserHasGroup = require('@models/usersHasGroupsModel');
-const UserHasActivity = require('@models/usersHasActivitiesModel');
+const UsersHasGroups = require('@models/usersHasGroupsModel');
+const UsersHasActivities = require('@models/usersHasActivitiesModel');
 const sequelize = require("@configs/dbConfig");
 
 User.belongsToMany(Group, { through: 'users_has_groups', foreignKey: 'idUser' });
@@ -18,7 +18,7 @@ module.exports = {
     User,
     Group,
     Activity,
-    UserHasGroup,
-    UserHasActivity,
+    UsersHasGroups,
+    UsersHasActivities,
     sequelize
 };

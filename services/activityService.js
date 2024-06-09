@@ -1,5 +1,5 @@
 
-const Activity = require("@models/index");
+const { Activity } = require("@models/index");
 
 const getAllActivity = async () => {
     try {

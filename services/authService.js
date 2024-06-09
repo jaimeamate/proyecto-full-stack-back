@@ -1,4 +1,4 @@
-const User = require("@models/index");
+const { User } = require("@models/index");
 const jwt = require('jsonwebtoken');
 
 const tokenExpiration = '1h';

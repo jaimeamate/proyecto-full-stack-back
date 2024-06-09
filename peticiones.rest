@@ -172,6 +172,19 @@ Content-Type: application/json
 }
 
 {
-    "activityId": 5,
-    "userIds": [6, 7, 9, 10]
+    "idActivity": 4,
+    "userIds": [6, 7]
 }
+
+### Actualiza usuarios de una actividad
+PATCH http://localhost:3030/api/activity/4/update-users
+Content-Type: application/json
+
+{
+  "userIds": [6, 9]
+}
+
+### Obtiene los usuarios de una actividad
+GET http://localhost:3030/api/activity/4/users
+
+
