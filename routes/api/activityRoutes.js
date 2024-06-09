@@ -5,6 +5,8 @@ const router = require("express").Router();
 const { getActivities, getActivitiesById, updateActivitiesPut,
     updateActivitiesPatch, createActivity, deleteActivity } = require("@controllers/activityController");
 
+const { addUsersToActivityController } = require("@controllers/userHasActivitiesController");
+
 //obtiene todas las actividades 
 router.get("/", getActivities);
 
@@ -25,5 +27,7 @@ router.post('/register', createActivity);
 //Borra el grupo
 router.delete("/:id", deleteActivity);
 
+//Añade usuarios a una actividad
+router.post('/add-users', addUsersToActivityController);
 
 module.exports = router;

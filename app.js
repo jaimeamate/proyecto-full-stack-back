@@ -12,20 +12,11 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 const apiRouter = require('@routes/api');
-
+// const db = require("@models/index");
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-// !!!!!!! Para comprobar que se conecta bien a la base de datos !!!!!!
-// const sequelize = require('@configs/dbConfig');
-//
-// sequelize.authenticate()
-//     .then(() => {
-//         console.log('Conexión establecida correctamente.');
-//     })
-//     .catch(err => {
-//         console.error('No se pudo conectar a la base de datos:', err);
-//     });
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -35,6 +26,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// db.sequelize.sync({ force: false }).then(() => {
+//     console.log('Database synchronized');
+// }).catch(err => {
+//     console.error('Unable to connect to the database:', err);
+// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

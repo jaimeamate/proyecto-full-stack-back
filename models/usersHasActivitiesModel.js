@@ -1,14 +1,14 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 const sequelize = require("@configs/dbConfig");
 
-const UsersHasActivities = sequelize.define('UsersHasActivities', {
+const UsersHasActivities = sequelize.define('UserHasActivity', {
     idUser: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
+        primaryKey: true
     },
-    idActivitie: {
+    idActivity: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
+        primaryKey: true
     },
     amount: DataTypes.DECIMAL
 });

@@ -66,14 +66,12 @@ POST http://localhost:3030/api/activity/register
 Content-Type: application/json
 
 {
-  "idGroup": 1,
- "name": "Vacas1",
-  "amount": "222",
+  "idGroup": 5,
+  "name": "Prueba",
+  "amount": "64",
   "type": "1",
   "date": "2024-05-01"
 }
-
-
 
 
 ### Obtener actividades
@@ -140,3 +138,11 @@ Content-Type: application/json
 ### Modificar GRUPO patch
 DELETE  http://localhost:3030/api/group/12
 
+### Añade usuarios a una activdad
+POST http://localhost:3030/api/activity/add-users
+Content-Type: application/json
+
+{
+    "activityId": 5,
+    "userIds": [6, 7, 9, 10]
+}
