@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken');
 
 const tokenExpiration = '1h';
 
-const registerUser = async({firstName, lastName, phoneNumber, email, password }) => {
+const registerUser = async({firstName, lastName, phoneNumber, email, password, ind_baja}) => {
     try {
-        const newUser = new User({firstName, lastName, phoneNumber, email, password});
+        const newUser = new User({firstName, lastName, phoneNumber, email, password, ind_baja});
         return await newUser.save();
     }catch(err){
         throw err;

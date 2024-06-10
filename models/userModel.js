@@ -31,6 +31,7 @@ const User = sequelize.define("User", {
     ind_baja: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        default: false,
     }
 
 }, {
