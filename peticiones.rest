@@ -8,7 +8,7 @@ Content-Type: application/json
   "firstName": "paepas",
   "lastName": "antoania",
   "phoneNumber": "123456789",
-  "email": "pepasas@gmaaail.com",
+  "email": "pepasas@aasdagmaaail.com",
   "password": "1111"
 
 }
@@ -128,7 +128,7 @@ DELETE  http://localhost:3030/api/group/14
 
 
 ### Envío de correo de prueba desde Outlook
-POST http://localhost:3031/api/mail/send
+POST http://localhost:3030/api/mail/send
 Content-Type: application/json
 
 {
@@ -141,8 +141,7 @@ Content-Type: application/json
 }
 
 ### Añade usuarios a una activdad
-POST http://localhost:3030/api/activity/1/add-users
-Content-Type: application/json
+
 
 ### Envío de correo de prueba desde Gmail
 POST http://localhost:3031/api/mail/send
@@ -157,16 +156,13 @@ Content-Type: application/json
     "text": "esto es una prueba desde Gmail"
 }
 
-{
-    "userIds": [6, 7]
-}
 
 ### Actualiza usuarios de una actividad
 PATCH http://localhost:3030/api/activity/4/update-users
 Content-Type: application/json
 
 {
-  "userIds": [6, 9]
+  "userIds": [7, 9]
 }
 
 ### Obtiene los usuarios de una actividad

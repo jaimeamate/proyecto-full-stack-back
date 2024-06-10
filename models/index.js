@@ -9,7 +9,7 @@ User.belongsToMany(Group, { through: 'users_has_groups', foreignKey: 'idUser' })
 Group.belongsToMany(User, { through: 'users_has_groups', foreignKey: 'idGroup' });
 
 User.belongsToMany(Activity, { through: 'users_has_activities', foreignKey: 'idUser' });
-Activity.belongsToMany(User, { through: 'users_has_activities', foreignKey: 'idActivity' });
+Activity.belongsToMany(User, { through: 'users_has_activities', foreignKey: 'idActivitie' });
 
 Group.hasMany(Activity, { foreignKey: 'idGroup' });
 Activity.belongsTo(Group, { foreignKey: 'idGroup' });
