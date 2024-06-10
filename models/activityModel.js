@@ -3,7 +3,6 @@ const { DataTypes } = require('sequelize');
 const sequelize = require("@configs/dbConfig");
 
 const Activity = sequelize.define("Activity", {
-    //id_activity: {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -31,6 +30,10 @@ const Activity = sequelize.define("Activity", {
     },
 
 }, { timestamps: false }); //hay que ponerlo porque sino añade los campos en el sql
+
+Activity.associate = (models) => {
+  Activity.belongsToMany(models.User, {through: models.UsersHasActivities, foreignKey: 'idActivitie' });
+};
 
 module.exports = Activity;
 

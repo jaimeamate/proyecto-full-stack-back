@@ -1,5 +1,5 @@
 
-const Activity = require("@models/activityModel");
+const { Activity, Group } = require("@models/index");
 
 const getAllActivity = async () => {
     try {
@@ -15,7 +15,6 @@ const getActivityWithId = async (id) => {
         if (!activity) {
             console.log("eror");
             throw new Error('Activity not found');
-
         }
         return activity;
     } catch (err) {
@@ -61,9 +60,15 @@ const editActivityPatch = async (id, updatedFields) => {
         if (!activity) {
             throw new Error('activity not found');
         }
-        Object.keys(updatedFields).forEach(key => {
+        for (const key of Object.keys(updatedFields)) {
+            if (key === 'idGroup') {
+                const group = await Group.findByPk(updatedFields[key]);
+                if (!group) {
+                    return { message: "Group not found" };
+                }
+            }
             activity[key] = updatedFields[key];
-        })
+        }
         return await activity.save();
     } catch (err) {
         throw err;

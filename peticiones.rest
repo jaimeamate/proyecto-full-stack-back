@@ -5,10 +5,10 @@ POST http://localhost:3030/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "pepas",
-  "lastName": "antonia",
+  "firstName": "paepas",
+  "lastName": "antoania",
   "phoneNumber": "123456789",
-  "email": "pepasadddd22s@gmail.com",
+  "email": "pepasas@gmaaail.com",
   "password": "1111"
 
 }
@@ -83,28 +83,16 @@ GET http://localhost:3030/api/activity/
 GET http://localhost:3030/api/activity/1
 
 
-### Modificar actividades put
-PUT http://localhost:3030/api/activity/8
-Content-Type: application/json
-
-{
-  "name": "Vacaciones Ibiza",
-  "amount": "333",
-  "type": "0",
-  "date": "2023-08-01"
-}
-
 ### Modificar actividades patch
-PATCH http://localhost:3030/api/activity/1
+PATCH http://localhost:3030/api/activity/4
 Content-Type: application/json
 
 {
- "name": "Vacaciones Marbella",
-  "amount": "213"
+ "idGroup": 5
 }
 
 ### eliminar actividad 
-DELETE  http://localhost:3030/api/activity/9
+DELETE  http://localhost:3030/api/activity/1
 
 
 ##############################    ENDPOINTS USER    ##############################
@@ -116,7 +104,7 @@ POST http://localhost:3030/api/group/register
 Content-Type: application/json
 
 {
-  "name": "Viajeros por el mundo"
+  "name": "Viajeros"
 }
 
 ###OBTENER GRUPOS
@@ -125,8 +113,6 @@ GET http://localhost:3030/api/group/
 
 ### Obtener GRUPO por su id
 GET http://localhost:3030/api/group/1
-
-
 
 ### Modificar GRUPO patch
 PATCH http://localhost:3030/api/group/1
@@ -154,6 +140,10 @@ Content-Type: application/json
     "text": "esto es una prueba desde Outlook11"
 }
 
+### Añade usuarios a una activdad
+POST http://localhost:3030/api/activity/1/add-users
+Content-Type: application/json
+
 ### Envío de correo de prueba desde Gmail
 POST http://localhost:3031/api/mail/send
 Content-Type: application/json
@@ -166,3 +156,19 @@ Content-Type: application/json
     "subject": "prueba desde Gmail",
     "text": "esto es una prueba desde Gmail"
 }
+
+{
+    "userIds": [6, 7]
+}
+
+### Actualiza usuarios de una actividad
+PATCH http://localhost:3030/api/activity/4/update-users
+Content-Type: application/json
+
+{
+  "userIds": [6, 9]
+}
+
+### Obtiene los usuarios de una actividad
+GET http://localhost:3030/api/activity/4/users
+
