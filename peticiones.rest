@@ -8,7 +8,7 @@ Content-Type: application/json
   "firstName": "pepas",
   "lastName": "antonia",
   "phoneNumber": "123456789",
-  "email": "pepasas@gmail.com",
+  "email": "pepasadddd22s@gmail.com",
   "password": "1111"
 
 }
@@ -84,7 +84,7 @@ GET http://localhost:3030/api/activity/1
 
 
 ### Modificar actividades put
-PUT http://localhost:3030/api/activity/1
+PUT http://localhost:3030/api/activity/8
 Content-Type: application/json
 
 {
@@ -104,7 +104,7 @@ Content-Type: application/json
 }
 
 ### eliminar actividad 
-DELETE  http://localhost:3030/api/activity/1
+DELETE  http://localhost:3030/api/activity/9
 
 
 ##############################    ENDPOINTS USER    ##############################
@@ -116,7 +116,7 @@ POST http://localhost:3030/api/group/register
 Content-Type: application/json
 
 {
-  "name": "Viajeros"
+  "name": "Viajeros por el mundo"
 }
 
 ###OBTENER GRUPOS
@@ -138,5 +138,31 @@ Content-Type: application/json
 }
 
 ### Modificar GRUPO patch
-DELETE  http://localhost:3030/api/group/12
+DELETE  http://localhost:3030/api/group/14
 
+
+### Envío de correo de prueba desde Outlook
+POST http://localhost:3031/api/mail/send
+Content-Type: application/json
+
+{
+    "service": "outlook",
+    "user": "sandra_prueba_full@hotmail.com",
+    "pass": "Prueba88",
+    "to": "folmos@everycode.es",
+    "subject": "prueba desde Outlook",
+    "text": "esto es una prueba desde Outlook11"
+}
+
+### Envío de correo de prueba desde Gmail
+POST http://localhost:3031/api/mail/send
+Content-Type: application/json
+
+{
+    "service": "gmail",
+    "user": "tu_correo_gmail@gmail.com",
+    "pass": "tu_contraseña_gmail",
+    "to": "destinatario@ejemplo.com",
+    "subject": "prueba desde Gmail",
+    "text": "esto es una prueba desde Gmail"
+}
