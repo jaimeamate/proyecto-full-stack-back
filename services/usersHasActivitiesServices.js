@@ -74,7 +74,6 @@ const updateUsersInActivity = async (userIds, activityId) => {
         }));
 
         return await UsersHasActivities.bulkCreate(userActivities, { updateOnDuplicate: ['amount'] });
-        // return { message: 'Users updated in activity successfully' };
     } catch (error) {
         console.error(error);
         throw error;

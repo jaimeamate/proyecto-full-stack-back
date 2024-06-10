@@ -15,11 +15,11 @@ router.get('/:id', getActivitiesById);
 
 
 //actualiza la actividad con PATCH
-router.put('/:id', updateActivitiesPatch);
+router.patch('/:id', updateActivitiesPatch);
 
 
 //actualiza una actividad con put
-router.patch('/:id', updateActivitiesPut);
+router.put('/:id', updateActivitiesPut);
 
 
 router.post('/register', createActivity);

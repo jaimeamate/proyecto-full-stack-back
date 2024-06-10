@@ -83,24 +83,12 @@ GET http://localhost:3030/api/activity/
 GET http://localhost:3030/api/activity/1
 
 
-### Modificar actividades put
-PUT http://localhost:3030/api/activity/1
-Content-Type: application/json
-
-{
-  "name": "Vacaciones Ibiza",
-  "amount": "333",
-  "type": "0",
-  "date": "2023-08-01"
-}
-
 ### Modificar actividades patch
-PATCH http://localhost:3030/api/activity/1
+PATCH http://localhost:3030/api/activity/4
 Content-Type: application/json
 
 {
- "name": "Vacaciones Marbella",
-  "amount": "213"
+ "idGroup": 5
 }
 
 ### eliminar actividad 
@@ -125,8 +113,6 @@ GET http://localhost:3030/api/group/
 
 ### Obtener GRUPO por su id
 GET http://localhost:3030/api/group/1
-
-
 
 ### Modificar GRUPO patch
 PATCH http://localhost:3030/api/group/1
@@ -155,7 +141,7 @@ Content-Type: application/json
 }
 
 ### Añade usuarios a una activdad
-POST http://localhost:3030/api/activity/add-users
+POST http://localhost:3030/api/activity/1/add-users
 Content-Type: application/json
 
 ### Envío de correo de prueba desde Gmail
@@ -172,7 +158,6 @@ Content-Type: application/json
 }
 
 {
-    "idActivity": 4,
     "userIds": [6, 7]
 }
 
@@ -186,5 +171,4 @@ Content-Type: application/json
 
 ### Obtiene los usuarios de una actividad
 GET http://localhost:3030/api/activity/4/users
-
 
