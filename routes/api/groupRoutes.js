@@ -7,7 +7,10 @@ const {
   deleteGroup,
 } = require("@controllers/groupController.js");
 
-const { postUsers_Group } = require("@controllers/userHasGroupsController");
+const {
+  postUsers_Group,
+  getUsers_Of_Group,
+} = require("@controllers/userHasGroupsController");
 
 //Obtiene los grupos
 router.get("/", getGroups);
@@ -27,5 +30,7 @@ router.delete("/:id", deleteGroup);
 //EMPIEZO CON END POINTS DE USUARIOS Y GRUPOS (user_has_groups)
 
 router.post("/has_group/:id_group", postUsers_Group);
+
+router.get("/has_group/:id_group", getUsers_Of_Group);
 
 module.exports = router;

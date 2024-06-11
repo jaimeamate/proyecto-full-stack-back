@@ -1,22 +1,7 @@
-const { register_User_has_Group } = require("@services/userHasGroupServices");
-const { getGroupById } = require("@controllers/groupController");
-const httpStatus = require("@configs/httpStatusCode.json");
-
-/*const postUsers_Group = async (req, res) => {
-  const group = await getGroupById(req.params.id_group);
-  if (group) {
-    try {
-      req.body.idGroup = parseInt(req.params.id_group);
-      const result = await register_User_has_Group(req.body);
-      res.status(202).status(201).json(result);
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
-  } else {
-    res.status(404).json({ error: httpStatus["404"] });
-  }
-};*/
+const {
+  register_User_has_Group,
+  find_Users_of_Group,
+} = require("@services/userHasGroupServices");
 
 const postUsers_Group = async (req, res) => {
   try {
@@ -29,6 +14,21 @@ const postUsers_Group = async (req, res) => {
   }
 };
 
+const getUsers_Of_Group = async (req, res) => {
+  try {
+    const result = await find_Users_of_Group(req.params.id_group);
+    if (result.length > 0) {
+      res.status(200).json(result);
+    } else {
+      throw new Error("Group without users");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   postUsers_Group,
+  getUsers_Of_Group,
 };
