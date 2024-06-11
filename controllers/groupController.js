@@ -5,6 +5,8 @@ const {
   editGroupPatch,
   deleteGroupById,
 } = require("@services/groupService");
+
+const { register_User_has_Group } = require("@services/userHasGroupServices");
 const httpStatus = require("@configs/httpStatusCode.json");
 
 const getGroups = async (req, res) => {
@@ -54,6 +56,23 @@ const deleteGroup = async (req, res) => {
   }
 };
 
+//comienzo con endpoints de users_has_groups
+
+const postUsers_Group = async (req, res) => {
+  const group = await getGroupWithId(req.params.id_group);
+  if (group) {
+    try {
+      req.body.idGroup = parseInt(req.params.id_group);
+      const result = await register_User_has_Group(req.body);
+      res.status(202).status(201).json(result);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  } else {
+    res.status(404).json({ error: httpStatus["404"] });
+  }
+};
 
 module.exports = {
   getGroups,
@@ -61,4 +80,5 @@ module.exports = {
   createGroup,
   updateGroupPatch,
   deleteGroup,
+  postUsers_Group,
 };
