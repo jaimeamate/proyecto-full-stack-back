@@ -10,6 +10,7 @@ const {
 const {
   postUsers_Group,
   getUsers_Of_Group,
+  getGroup_Of_User,
 } = require("@controllers/userHasGroupsController");
 
 //Obtiene los grupos
@@ -29,8 +30,13 @@ router.delete("/:id", deleteGroup);
 
 //EMPIEZO CON END POINTS DE USUARIOS Y GRUPOS (user_has_groups)
 
+//ingreso un usuario a un Grupo
 router.post("/has_group/:id_group", postUsers_Group);
 
+//recupero usuarios de un Grupo
 router.get("/has_group/:id_group", getUsers_Of_Group);
+
+//recupero grupos de un usuario
+router.get("/has_group/users/:id_user", getGroup_Of_User);
 
 module.exports = router;

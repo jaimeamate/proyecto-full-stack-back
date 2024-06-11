@@ -1,6 +1,7 @@
 const {
   register_User_has_Group,
   find_Users_of_Group,
+  find_Groups_of_User,
 } = require("@services/userHasGroupServices");
 
 const postUsers_Group = async (req, res) => {
@@ -28,7 +29,22 @@ const getUsers_Of_Group = async (req, res) => {
   }
 };
 
+const getGroup_Of_User = async (req, res) => {
+  try {
+    const result = await find_Groups_of_User(req.params.id_user);
+    if (result.length > 0) {
+      res.status(200).json(result);
+    } else {
+      throw new Error("User without GROUPS");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   postUsers_Group,
   getUsers_Of_Group,
+  getGroup_Of_User,
 };

@@ -1,5 +1,6 @@
 const { UsersHasGroups } = require("@models/index");
 const { getGroupWithId } = require("./groupService");
+const { getUserWithId } = require("./userService");
 
 const register_User_has_Group = async (name) => {
   try {
@@ -34,7 +35,31 @@ const find_Users_of_Group = async (groupId) => {
   }
 };
 
+const find_Groups_of_User = async (userId) => {
+  try {
+    if (!userId) {
+      throw new Error("Invalid input");
+    }
+
+    const user = await getUserWithId(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return await UsersHasGroups.findAll({
+      where: {
+        idUser: userId,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 module.exports = {
   register_User_has_Group,
   find_Users_of_Group,
+  find_Groups_of_User,
 };
