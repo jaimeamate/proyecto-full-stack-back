@@ -3,7 +3,7 @@ const { Group } = require("@models/index");
 const getAllGroups = async () => {
   try {
     const groups = await Group.findAll();
-    if(groups.length !== 0) {
+    if (groups.length !== 0) {
       return groups;
     }
     return {};

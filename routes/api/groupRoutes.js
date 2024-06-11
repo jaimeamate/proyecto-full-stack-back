@@ -5,8 +5,9 @@ const {
   createGroup,
   updateGroupPatch,
   deleteGroup,
-  postUsers_Group,
 } = require("@controllers/groupController.js");
+
+const { postUsers_Group } = require("@controllers/userHasGroupsController");
 
 //Obtiene los grupos
 router.get("/", getGroups);
