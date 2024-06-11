@@ -8,7 +8,7 @@ Content-Type: application/json
   "firstName": "paepas",
   "lastName": "antoania",
   "phoneNumber": "123456789",
-  "email": "pepaasdasdasas@aasdagmaaail.com",
+  "email": "aaaa@aasdagmaaail.com",
   "password": "1111",
   "ind_baja": true
 

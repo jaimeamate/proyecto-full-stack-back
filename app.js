@@ -20,11 +20,12 @@ const apiRouter = require('@routes/api');
 
 
 const port = process.env.PORT || 3000;
-
+const cors = require('cors');
 
 
 //const port1 = process.env.PORT1 || 3001;
 
+app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
