@@ -5,10 +5,10 @@ POST http://localhost:3030/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "Santiago",
-  "lastName": "Mudry",
+  "firstName": "Nico",
+  "lastName": "Laza",
   "phoneNumber": "55555789",
-  "email": "santi@gmail.com",
+  "email": "Nico@gmail.com",
   "password": "2222"
 
 }
@@ -127,11 +127,11 @@ GET http://localhost:3030/api/group/5
 
 
 ### Modificar GRUPO patch
-PATCH http://localhost:3030/api/group/1
+PATCH http://localhost:3030/api/group/7
 Content-Type: application/json
 
 {
-  "name": "Viaje Rio Turbio"
+  "name": "Viaje Rio CLARO"
   
 }
 
@@ -140,12 +140,23 @@ DELETE  http://localhost:3030/api/group/12
 
 ##############################    ENDPOINTS user_has_groups    ##############################
 ### Añade un usuario a un grupo
-POST http://localhost:3030/api/group/has_group/3
+POST http://localhost:3030/api/group/has_group
 Content-Type: application/json
 
-{"idUser":2,
-"idGroup":0
+{
+    "idGroup":3,
+    "userIds":[3,5]
 }
+
+###Busca usuarios en un grupo
+GET http://localhost:3030/api/group/has_group/3
+Content-Type: application/json
+
+###Recupera grupos de un usuario
+GET http://localhost:3030/api/group/has_group/users/3
+Content-Type: application/json
+
+
 
 
 ##############################    FINALIZA ENDPOINTS  user_has_groups    ##############################

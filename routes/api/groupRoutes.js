@@ -31,7 +31,7 @@ router.delete("/:id", deleteGroup);
 //EMPIEZO CON END POINTS DE USUARIOS Y GRUPOS (user_has_groups)
 
 //ingreso un usuario a un Grupo
-router.post("/has_group/:id_group", postUsers_Group);
+router.post("/has_group", postUsers_Group);
 
 //recupero usuarios de un Grupo
 router.get("/has_group/:id_group", getUsers_Of_Group);

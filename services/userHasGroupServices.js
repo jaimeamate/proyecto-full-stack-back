@@ -1,14 +1,39 @@
-const { UsersHasGroups } = require("@models/index");
+const { UsersHasGroups, User, Group } = require("@models/index");
 const { getGroupWithId } = require("./groupService");
 const { getUserWithId } = require("./userService");
 
-const register_User_has_Group = async (name) => {
+const register_User_has_Group = async (userIds, GroupId) => {
   try {
-    const newUserHGroup = new UsersHasGroups(name);
-    return await newUserHGroup.save();
-  } catch (err) {
-    console.log(err);
-    throw err;
+    if (!Array.isArray(userIds) || !GroupId) {
+      throw new Error("Invalid input");
+    }
+
+    const hasgroup = await Group.findByPk(GroupId);
+
+    if (!hasgroup) {
+      throw new Error("Group not found");
+    }
+
+    // Verifica que todos los usuarios existen
+    const users = await User.findAll({
+      where: {
+        id: userIds,
+      },
+    });
+
+    if (users.length !== userIds.length) {
+      throw new Error("Some users not found");
+    }
+
+    const userGroups = userIds.map((userId) => ({
+      idUser: userId,
+      idGroup: GroupId,
+    }));
+
+    return await UsersHasGroups.bulkCreate(userGroups);
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };
 
