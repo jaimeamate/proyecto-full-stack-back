@@ -3,11 +3,13 @@ const {
   find_Users_of_Group,
   find_Groups_of_User,
   patch_Users_Has_Groups,
+  find_Activity_of_Group,
 } = require("@services/userHasGroupServices");
 
 const postUsers_Group = async (req, res) => {
   try {
-    const { idGroup, userIds } = req.body;
+    const { userIds } = req.body;
+    const idGroup = req.params.id_group;
 
     if (!idGroup || !Array.isArray(userIds) || userIds.length === 0) {
       return res.status(400).json({ error: "Invalid input data" });
@@ -51,7 +53,9 @@ const getGroup_Of_User = async (req, res) => {
 
 const change_User_Has_Group = async (req, res) => {
   try {
-    const { groupId, usersIn, usersOut } = req.body;
+    const { usersIn, usersOut } = req.body;
+    const groupId = req.params.id_group;
+    console.log("params", groupId);
 
     if (
       !groupId ||
@@ -71,9 +75,24 @@ const change_User_Has_Group = async (req, res) => {
   }
 };
 
+const getActivity_Of_Group = async (req, res) => {
+  try {
+    const result = await find_Activity_of_Group(req.params.id_group);
+    if (result.length > 0) {
+      res.status(200).json(result);
+    } else {
+      throw new Error("Group without ACTIVITIES");
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
 module.exports = {
   postUsers_Group,
   getUsers_Of_Group,
   getGroup_Of_User,
   change_User_Has_Group,
+  getActivity_Of_Group,
 };

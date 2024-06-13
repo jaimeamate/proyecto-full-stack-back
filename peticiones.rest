@@ -66,9 +66,9 @@ POST http://localhost:3030/api/activity/register
 Content-Type: application/json
 
 {
-  "idGroup": 5,
-  "name": "Prueba",
-  "amount": "64",
+  "idGroup": 11,
+  "name": "HOTEL",
+  "amount": "55",
   "type": "1",
   "date": "2024-05-01"
 }
@@ -163,35 +163,39 @@ DELETE  http://localhost:3030/api/group/12
 
 ##############################    ENDPOINTS user_has_groups    ##############################
 ### Añade un usuario a un grupo
-POST http://localhost:3030/api/group/11/add_user/
+POST http://localhost:3030/api/group/11/add_user
 Content-Type: application/json
 
 {
-    "idGroup":11,
-    "userIds":[1,2,3,4]
+    "userIds":[1,2,4]
 }
 
 ###Busca usuarios en un grupo
-GET http://localhost:3030/api/group/3/users
+GET http://localhost:3030/api/group/11/users
 Content-Type: application/json
 
 ###Recupera grupos de un usuario
-GET http://localhost:3030/api/users/id/groups
+GET http://localhost:3030/api/group/users/3/group
+
+
+###Recupera ACTIVIDAD de un grupo
+GET http://localhost:3030/api/group/11/activity
+
+
 Content-Type: application/json
 
 ###Quita algunos usuarios y agrega otros
-PATCH http://localhost:3030/api/group/has_group/users/change
+PATCH http://localhost:3030/api/group/11/users/change
 Content-Type: application/json
 
 {
-    "groupId":11,
-    "usersIn":[5,7],
-    "usersOut":[1,3]
+    "usersIn":[1,2],
+    "usersOut":[3,4]
 }
 
 
 
-##############################    FINALIZA ENDPOINTS  user_has_groups    ##############################
+
 
 
 

@@ -1,4 +1,4 @@
-const { UsersHasGroups, User, Group } = require("@models/index");
+const { UsersHasGroups, User, Group, Activity } = require("@models/index");
 const { getGroupWithId } = require("./groupService");
 const { getUserWithId } = require("./userService");
 const { Sequelize, Op } = require("sequelize");
@@ -95,10 +95,6 @@ const register_Admin = async (name) => {
 };
 
 const patch_Users_Has_Groups = async (groupId, usersIn, usersOut) => {
-  console.log("###PATCH SERVICE");
-  console.log("GRUPO ==>", groupId);
-  console.log("A ENTRAR ==>", usersIn);
-  console.log("A SALIR ==>", usersOut);
   try {
     if (!Array.isArray(usersOut) || !Array.isArray(usersIn) || !groupId) {
       throw new Error("Invalid input");
@@ -156,10 +152,34 @@ const out_Users = async (usersOut, groupId) => {
   return result;
 };
 
+const find_Activity_of_Group = async (groupId) => {
+  try {
+    if (!groupId) {
+      throw new Error("Invalid input");
+    }
+
+    const groups = await getGroupWithId(groupId);
+
+    if (!groups) {
+      throw new Error("Group not found");
+    }
+
+    return await Activity.findAll({
+      where: {
+        idGroup: groupId,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 module.exports = {
   register_User_has_Group,
   find_Users_of_Group,
   find_Groups_of_User,
   register_Admin,
   patch_Users_Has_Groups,
+  find_Activity_of_Group,
 };
