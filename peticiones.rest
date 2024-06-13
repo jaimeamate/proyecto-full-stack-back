@@ -92,7 +92,7 @@ Content-Type: application/json
   "date": "2023-08-01"
 }
 
-### Modificar actividades patch
+### Modificar actividades patch (MIDDLEWARE)
 PATCH http://localhost:3030/api/activity/1
 Content-Type: application/json
 
@@ -101,11 +101,34 @@ Content-Type: application/json
   "amount": "213"
 }
 
-### eliminar actividad 
+### eliminar actividad (MIDDLEWARE)
 DELETE  http://localhost:3030/api/activity/1
 
 
 ##############################    ENDPOINTS USER    ##############################
+
+### Añade usuarios a una activdad
+POST http://localhost:3030/api/activity/add-users
+Content-Type: application/json
+
+{
+    "idActivity": 4,
+    "userIds": [6, 7]
+}
+
+### Actualiza usuarios de una actividad
+PATCH http://localhost:3030/api/activity/4/update-users
+Content-Type: application/json
+
+{
+  "userIds": [6, 9]
+}
+
+### Obtiene los usuarios de una actividad
+GET http://localhost:3030/api/activity/4/users
+
+
+
 
 ##############################    ENDPOINTS GROUPS    ##############################
 
@@ -140,7 +163,7 @@ DELETE  http://localhost:3030/api/group/12
 
 ##############################    ENDPOINTS user_has_groups    ##############################
 ### Añade un usuario a un grupo
-POST http://localhost:3030/api/group/has_group
+POST http://localhost:3030/api/group/11/add_user/
 Content-Type: application/json
 
 {
@@ -149,11 +172,11 @@ Content-Type: application/json
 }
 
 ###Busca usuarios en un grupo
-GET http://localhost:3030/api/group/has_group/3
+GET http://localhost:3030/api/group/3/users
 Content-Type: application/json
 
 ###Recupera grupos de un usuario
-GET http://localhost:3030/api/group/has_group/users/3
+GET http://localhost:3030/api/users/id/groups
 Content-Type: application/json
 
 ###Quita algunos usuarios y agrega otros
@@ -163,7 +186,7 @@ Content-Type: application/json
 {
     "groupId":11,
     "usersIn":[5,7],
-    "usersOut":[1,2]
+    "usersOut":[1,3]
 }
 
 
@@ -171,24 +194,5 @@ Content-Type: application/json
 ##############################    FINALIZA ENDPOINTS  user_has_groups    ##############################
 
 
-### Añade usuarios a una activdad
-POST http://localhost:3030/api/activity/add-users
-Content-Type: application/json
-
-{
-    "idActivity": 4,
-    "userIds": [6, 7]
-}
-
-### Actualiza usuarios de una actividad
-PATCH http://localhost:3030/api/activity/4/update-users
-Content-Type: application/json
-
-{
-  "userIds": [6, 9]
-}
-
-### Obtiene los usuarios de una actividad
-GET http://localhost:3030/api/activity/4/users
 
 
