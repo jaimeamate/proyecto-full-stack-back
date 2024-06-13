@@ -1,6 +1,7 @@
 const { UsersHasGroups, User, Group } = require("@models/index");
 const { getGroupWithId } = require("./groupService");
 const { getUserWithId } = require("./userService");
+const { Sequelize, Op } = require("sequelize");
 
 const register_User_has_Group = async (userIds, GroupId) => {
   try {
@@ -83,8 +84,82 @@ const find_Groups_of_User = async (userId) => {
   }
 };
 
+const register_Admin = async (name) => {
+  try {
+    const newUserHGroup = new UsersHasGroups(name);
+    return await newUserHGroup.save();
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const patch_Users_Has_Groups = async (groupId, usersIn, usersOut) => {
+  console.log("###PATCH SERVICE");
+  console.log("GRUPO ==>", groupId);
+  console.log("A ENTRAR ==>", usersIn);
+  console.log("A SALIR ==>", usersOut);
+  try {
+    if (!Array.isArray(usersOut) || !Array.isArray(usersIn) || !groupId) {
+      throw new Error("Invalid input");
+    }
+
+    const hasgroup = await Group.findByPk(groupId);
+
+    if (!hasgroup) {
+      throw new Error("Group not found");
+    }
+
+    // Verifica que todos los usuarios para ingresar existan
+    const inUsers = await User.findAll({
+      where: {
+        id: usersIn,
+      },
+    });
+
+    if (inUsers.length !== usersIn.length) {
+      throw new Error("Some users to insert not found");
+    }
+
+    // Verifica que todos los usuarios para sacar existan
+    const outUsers = await User.findAll({
+      where: {
+        id: usersOut,
+      },
+    });
+
+    if (outUsers.length !== usersOut.length) {
+      throw new Error("Some users to delete not found");
+    }
+
+    const userToInsert = usersIn.map((userId) => ({
+      idUser: userId,
+      idGroup: groupId,
+    }));
+    const out = await out_Users(usersOut, groupId);
+    return await UsersHasGroups.bulkCreate(userToInsert);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const out_Users = async (usersOut, groupId) => {
+  const result = await UsersHasGroups.destroy({
+    where: {
+      idUser: {
+        [Sequelize.Op.in]: usersOut,
+      },
+      idGroup: groupId,
+    },
+  });
+  return result;
+};
+
 module.exports = {
   register_User_has_Group,
   find_Users_of_Group,
   find_Groups_of_User,
+  register_Admin,
+  patch_Users_Has_Groups,
 };

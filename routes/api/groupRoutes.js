@@ -11,6 +11,7 @@ const {
   postUsers_Group,
   getUsers_Of_Group,
   getGroup_Of_User,
+  change_User_Has_Group,
 } = require("@controllers/userHasGroupsController");
 
 //Obtiene los grupos
@@ -19,8 +20,8 @@ router.get("/", getGroups);
 //Obtiene grupo por id
 router.get("/:id", getGroupById);
 
-// router.post("/register", createGroup);
-router.post("/register", createGroup);
+// Creacion de grupo y admin del grupo es el que lo crea
+router.post("/register/:id_user", createGroup);
 
 //Actualiza el grupo con PATCH
 router.patch("/:id", updateGroupPatch);
@@ -38,5 +39,8 @@ router.get("/has_group/:id_group", getUsers_Of_Group);
 
 //recupero grupos de un usuario
 router.get("/has_group/users/:id_user", getGroup_Of_User);
+
+//saca usuarios y agrega a un grupo
+router.patch("/has_group/users/change", change_User_Has_Group);
 
 module.exports = router;

@@ -7,6 +7,7 @@ const {
 } = require("@services/groupService");
 
 const httpStatus = require("@configs/httpStatusCode.json");
+const { register_Admin } = require("../services/userHasGroupServices");
 
 const getGroups = async (req, res) => {
   const groups = await getAllGroups();
@@ -29,6 +30,11 @@ const getGroupById = async (req, res) => {
 const createGroup = async (req, res) => {
   try {
     const result = await registerGroup(req.body);
+
+    const name = { idUser: req.params.id_user, idGroup: result.id, isAdmin: 1 };
+
+    const admin = await register_Admin(name);
+
     res.status(202).status(201).json(result);
   } catch (err) {
     console.log(err);

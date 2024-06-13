@@ -110,11 +110,11 @@ DELETE  http://localhost:3030/api/activity/1
 ##############################    ENDPOINTS GROUPS    ##############################
 
 ### Crear grupos
-POST http://localhost:3030/api/group/register
+POST http://localhost:3030/api/group/register/3
 Content-Type: application/json
 
 {
-  "name": "Viajeros"
+  "name": "Los Angeles"
 }
 
 ###OBTENER GRUPOS
@@ -144,8 +144,8 @@ POST http://localhost:3030/api/group/has_group
 Content-Type: application/json
 
 {
-    "idGroup":3,
-    "userIds":[3,5]
+    "idGroup":11,
+    "userIds":[1,2,3,4]
 }
 
 ###Busca usuarios en un grupo
@@ -156,6 +156,15 @@ Content-Type: application/json
 GET http://localhost:3030/api/group/has_group/users/3
 Content-Type: application/json
 
+###Quita algunos usuarios y agrega otros
+PATCH http://localhost:3030/api/group/has_group/users/change
+Content-Type: application/json
+
+{
+    "groupId":11,
+    "usersIn":[5,7],
+    "usersOut":[1,2]
+}
 
 
 
