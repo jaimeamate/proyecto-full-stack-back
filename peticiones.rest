@@ -157,7 +157,13 @@ Content-Type: application/json
     "text": "esto es una prueba desde Gmail"
 }
 
+### Añade usuarios a una activdad
+POST http://localhost:3030/api/activity/4/add-users
+Content-Type: application/json
 
+{
+  "userIds": [11, 12]
+}
 ### Actualiza usuarios de una actividad
 PATCH http://localhost:3030/api/activity/4/update-users
 Content-Type: application/json

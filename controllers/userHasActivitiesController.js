@@ -2,8 +2,8 @@ const { addUsersToActivity, updateUsersInActivity, getAllUsersFromActivity, dele
 
 const postUsersInActivity = async (req, res) => {
     try {
-        const { idActivity, userIds  } = req.body;
-        const result = await addUsersToActivity(userIds, idActivity);
+        const {  userIds  } = req.body;
+        const result = await addUsersToActivity(userIds, req.params.id);
         res.status(200).json(result);
     } catch (err) {
         console.error(err);

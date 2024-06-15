@@ -28,7 +28,7 @@ router.post('/register', createActivity);
 router.delete("/:id", deleteActivity);
 
 //Añade usuarios a una actividad
-router.post('/add-users', postUsersInActivity);
+router.post('/:id/add-users', postUsersInActivity);
 
 //Actualiza los usuarios de una actividad
 router.patch('/:id/update-users', patchUsersInActivity);
