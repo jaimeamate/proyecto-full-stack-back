@@ -2,7 +2,6 @@ const { Activity, User, UsersHasActivities } = require("@models/index");
 const path = require('path');
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
-
 require('dotenv').config();
 
 let transporter = nodemailer.createTransport({
@@ -29,15 +28,7 @@ const sendEmail = (to, subject, htmlContent) => {
     });
 };
 
-const renderHtml = async (userName, activityName) => {
-    try {
-        let templatePath = path.join(__dirname, 'welcome.ejs');
-        return await ejs.renderFile(templatePath, { userName, activityName });
-    } catch (error) {
-        console.error('Error al renderizar el HTML:', error);
-        return '<p>Error loading HTML content</p>';
-    }
-};
+
 
 const addUsersToActivity = async (userIds, activityId) => {
     try {
@@ -113,11 +104,30 @@ const updateUsersInActivity = async (userIds, activityId) => {
             amount: activity.amount || 0
         }));
 
-        for (const user of users) {
-            const htmlContent = await renderHtml(user.name, activity.name);
+        // const userIds = userActivities.map(ua => ua.idUser);
+        const users1 = await User.findAll({
+            where: {
+                id: userIds
+            },
+            attributes: ['firstName', 'lastName', 'email'] // Selecciona solo los campos necesarios
+        });
+
+        for (const user of users1) {
+
+            const renderHtml = async (userName, activityName) => {
+                try {
+                    let templatePath = path.join(__dirname, '../html', 'welcome.ejs');
+                    return await ejs.renderFile(templatePath, { userName, activityName });
+                } catch (error) {
+                    console.error('Error al renderizar el HTML:', error);
+                    return '<p>Error loading HTML content</p>';
+                }
+            };
+
+            const userName = `${user.firstName} ${user.lastName}`;
+            const htmlContent = await renderHtml(userName, activity.name);
             sendEmail(user.email, `ASIGNADO A GRUPO: ${activity.name}`, htmlContent);
         }
-
         return await UsersHasActivities.bulkCreate(userActivities, { updateOnDuplicate: ['amount'] });
     } catch (error) {
         console.error(error);
@@ -152,6 +162,17 @@ const getAllUsersFromActivity = async (activityId) => {
         });
 
         for (const user of users) {
+
+            const renderHtml = async (userName, activityName) => {
+                try {
+                    let templatePath = path.join(__dirname, '../html', 'welcome.ejs');
+                    return await ejs.renderFile(templatePath, { userName, activityName });
+                } catch (error) {
+                    console.error('Error al renderizar el HTML:', error);
+                    return '<p>Error loading HTML content</p>';
+                }
+            };
+
             const userName = `${user.firstName} ${user.lastName}`;
             const htmlContent = await renderHtml(userName, activity.name);
             sendEmail(user.email, `ASIGNADO A GRUPO: ${activity.name}`, htmlContent);
@@ -180,6 +201,32 @@ const deleteUsersFromActivity = async (activityId) => {
                 idActivitie: activityId
             }
         });
+
+        const users = await User.findAll({
+            where: {
+                id: userIds
+            },
+            attributes: ['firstName', 'lastName', 'email'] // Selecciona solo los campos necesarios
+        });
+
+        for (const user of users) {
+
+            const renderHtml = async (userName, activityName) => {
+                try {
+                    let templatePath = path.join(__dirname, '../html', 'delete.ejs');
+                    return await ejs.renderFile(templatePath, { userName, activityName });
+                } catch (error) {
+                    console.error('Error al renderizar el HTML:', error);
+                    return '<p>Error loading HTML content</p>';
+                }
+            };
+
+            const userName = `${user.firstName} ${user.lastName}`;
+            const htmlContent = await renderHtml(userName, activity.name);
+            sendEmail(user.email, `ASIGNADO A GRUPO: ${activity.name}`, htmlContent);
+        }
+
+
 
         return { message: 'Usuarios eliminados de la actividad con éxito' };
     } catch (error) {
