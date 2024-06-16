@@ -23,7 +23,7 @@ const port = process.env.PORT || 3000;
 
 
 
-//const port1 = process.env.PORT1 || 3001;
+const port1 = process.env.PORT1 || 3001;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -71,8 +71,8 @@ app.use(function (err, req, res, next) {
 
 
 
-//app.listen(port1, () => {
-//   console.log(`Servidor corriendo en el puerto ${port1}`);
-//});
+app.listen(port1, () => {
+    console.log(`Servidor corriendo en el puerto ${port1}`);
+});
 
 module.exports = app;

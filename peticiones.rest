@@ -8,8 +8,10 @@ Content-Type: application/json
   "firstName": "paepas",
   "lastName": "antoania",
   "phoneNumber": "123456789",
-  "email": "pepasas@aasdagmaaail.com",
-  "password": "1111"
+  "email": "pes@aassdagmaaail.com",
+  "password": "1111",
+  "ind_baja": true
+  
 
 }
 
@@ -158,13 +160,13 @@ Content-Type: application/json
 
 
 ### Actualiza usuarios de una actividad
-PATCH http://localhost:3030/api/activity/4/update-users
+PATCH http://localhost:3031/api/activity/10/update-users
 Content-Type: application/json
 
 {
-  "userIds": [7, 9]
+  "userIds": [5]
 }
 
 ### Obtiene los usuarios de una actividad
-GET http://localhost:3030/api/activity/4/users
+GET http://localhost:3031/api/activity/10/users
 

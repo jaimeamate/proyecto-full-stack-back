@@ -3,17 +3,18 @@ const jwt = require('jsonwebtoken');
 
 const tokenExpiration = '1h';
 
-const registerUser = async({firstName, lastName, phoneNumber, email, password }) => {
+const registerUser = async ({ firstName, lastName, phoneNumber, email, password, ind_baja }) => {
     try {
-        const newUser = new User({firstName, lastName, phoneNumber, email, password});
+        const newUser = new User({ firstName, lastName, phoneNumber, email, password, ind_baja });
         return await newUser.save();
-    }catch(err){
+    } catch (err) {
         throw err;
     }
-}
-const createToken = (user) =>{
-    const payload = {user_id: user.id, username: user.username, email: user.email, role: "admin", ind_baja: user.ind_baja};
-    const options = {expiresIn: tokenExpiration};
+};
+
+const createToken = (user) => {
+    const payload = { user_id: user.id, username: user.username, email: user.email, role: "admin", ind_baja: user.ind_baja };
+    const options = { expiresIn: tokenExpiration };
 
     return jwt.sign(payload, process.env.JWT_SECRET_KEY, options);
 }
