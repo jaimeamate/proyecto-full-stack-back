@@ -167,7 +167,7 @@ POST http://localhost:3030/api/group/11/add_user
 Content-Type: application/json
 
 {
-    "userIds":[3,7]
+    "userIds":[2,7]
 }
 
 ###Busca usuarios en un grupo
@@ -182,24 +182,32 @@ GET http://localhost:3030/api/group/users/3/group
 GET http://localhost:3030/api/group/11/activity
 
 
-###Recupera PAGOS de un grupo DE TODAS LAS ACTIVIDADES DEL GRUPO
-GET http://localhost:3030/api/group/11/payment
-
-
-
-
-Content-Type: application/json
-
 ###Quita algunos usuarios y agrega otros
 PATCH http://localhost:3030/api/group/11/users/change
 Content-Type: application/json
 
 {
-    "usersIn":[7],
-    "usersOut":[6]
+    "usersIn":[1],
+    "usersOut":[2,6]
+}
+
+### Borro usuarios de un grupo
+DELETE  http://localhost:3030/api/group/11/users
+Content-Type: application/json
+
+{
+    "usersOut":[3,7]
 }
 
 
+###Cambio administrador
+PATCH http://localhost:3030/api/group/11/admin/change
+Content-Type: application/json
+
+{
+    "newAdmin":1,
+    "oldAdmin":2
+}
 
 
 

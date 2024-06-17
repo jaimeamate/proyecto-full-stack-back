@@ -1,10 +1,4 @@
-const {
-  UsersHasGroups,
-  User,
-  Group,
-  Activity,
-  UsersHasActivities,
-} = require("@models/index");
+const { UsersHasGroups, User, Group, Activity } = require("@models/index");
 const { getGroupWithId } = require("./groupService");
 const { getUserWithId } = require("./userService");
 const { Sequelize, Op } = require("sequelize");
@@ -183,14 +177,18 @@ const find_Activity_of_Group = async (groupId) => {
 
 const findAdminIs = async (groupId) => {
   try {
+    const hasgroup = await Group.findByPk(groupId);
+
+    if (!hasgroup) {
+      throw new Error("Group not found");
+    }
     const adminUser = await UsersHasGroups.findOne({
-      //attributes: ["idUser"], // Selecciona solo la columna idUser
       where: {
         idGroup: groupId,
         isAdmin: true,
       },
     });
-    console.log(`Result find is ===>${JSON.stringify(adminUser.dataValues)}`);
+
     return (adminIsHere = JSON.stringify(adminUser.dataValues));
   } catch (error) {
     console.error(error);
@@ -198,27 +196,18 @@ const findAdminIs = async (groupId) => {
   }
 };
 
-const find_Payment_of_Group = async (groupId) => {
-  try {
-    if (!groupId) {
-      throw new Error("Invalid input");
-    }
+const delete_User_has_Group = async (usersOut, groupId) => {
+  const usersToDel = await User.findAll({
+    where: {
+      id: usersOut,
+    },
+  });
 
-    const groups = await getGroupWithId(groupId);
-
-    if (!groups) {
-      throw new Error("Group not found");
-    }
-
-    return await UsersHasActivities.findAll({
-      where: {
-        idActivitie: groupId,
-      },
-    });
-  } catch (error) {
-    console.error(error);
-    throw error;
+  if (usersToDel.length !== usersOut.length) {
+    throw new Error("Some users to delete not found");
   }
+
+  const out = await out_Users(usersOut, groupId);
 };
 
 module.exports = {
@@ -228,6 +217,6 @@ module.exports = {
   register_Admin,
   patch_Users_Has_Groups,
   find_Activity_of_Group,
-  find_Payment_of_Group,
   findAdminIs,
+  delete_User_has_Group,
 };

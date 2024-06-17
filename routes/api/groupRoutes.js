@@ -13,7 +13,8 @@ const {
   getGroup_Of_User,
   change_User_Has_Group,
   getActivity_Of_Group,
-  getPayment_Of_Group,
+  delete_Users_Of_Group,
+  change_Admin_Of_Group,
 } = require("@controllers/userHasGroupsController");
 
 //Obtiene los grupos
@@ -38,7 +39,6 @@ router.delete("/:id", deleteGroup);
 router.post("/:id_group/add_user", postUsers_Group);
 
 //recupero usuarios de un Grupo
-
 router.get("/:id_group/users", getUsers_Of_Group);
 
 //recupero grupos de un usuario
@@ -47,10 +47,13 @@ router.get("/users/:id_user/group", getGroup_Of_User);
 //recupero ACTIVIDAD de un grupo
 router.get("/:id_group/activity", getActivity_Of_Group);
 
-//recupero PAGOS de un grupo DE TODAS LAS ACTIVIDADES ### este lo tengo que ver ####
-router.get("/:id_group/payment", getPayment_Of_Group);
+//borro USUARIOS de un grupo
+router.delete("/:id_group/users", delete_Users_Of_Group);
 
 //saca usuarios y agrega a un grupo
 router.patch("/:id_group/users/change", change_User_Has_Group);
+
+//cambia ADMIN del grupo
+router.patch("/:id_group/admin/change", change_Admin_Of_Group);
 
 module.exports = router;

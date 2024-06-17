@@ -5,6 +5,7 @@ const {
   patch_Users_Has_Groups,
   find_Activity_of_Group,
   findAdminIs,
+  delete_User_has_Group,
 } = require("@services/userHasGroupServices");
 
 const postUsers_Group = async (req, res) => {
@@ -70,8 +71,6 @@ const change_User_Has_Group = async (req, res) => {
     const adminIs = await findAdminIs(groupId);
     adminIsHere = JSON.parse(adminIs);
 
-    console.log("Volvi al controler IS HERE ####==>" + adminIsHere.idUser);
-
     if (usersOut.includes(adminIsHere.idUser)) {
       return res.status(400).json({ error: "Is an Admin to delete" });
     }
@@ -98,14 +97,24 @@ const getActivity_Of_Group = async (req, res) => {
   }
 };
 
-const getPayment_Of_Group = async (req, res) => {
+const delete_Users_Of_Group = async (req, res) => {
   try {
-    const result = await find_Payment_of_Group(req.params.id_group);
-    if (result.length > 0) {
-      res.status(200).json(result);
-    } else {
-      throw new Error("Group without PAYMENTS");
+    const { usersOut } = req.body;
+    const groupId = req.params.id_group;
+
+    if (!groupId || !Array.isArray(usersOut) || usersOut.length === 0) {
+      return res.status(400).json({ error: "Invalid input data" });
     }
+
+    const adminIs = await findAdminIs(groupId);
+    adminIsHere = JSON.parse(adminIs);
+    console.log("AIM A COUBOY=>" + adminIsHere);
+    if (usersOut.includes(adminIsHere.idUser)) {
+      return res.status(400).json({ error: "Is an Admin to delete" });
+    }
+
+    const result = await delete_User_has_Group(usersOut, groupId);
+    res.status(200).json(result);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -118,5 +127,5 @@ module.exports = {
   getGroup_Of_User,
   change_User_Has_Group,
   getActivity_Of_Group,
-  getPayment_Of_Group,
+  delete_Users_Of_Group,
 };
