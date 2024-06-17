@@ -7,7 +7,7 @@ const {
 } = require("@models/index");
 const { getGroupWithId } = require("./groupService");
 const { getUserWithId } = require("./userService");
-const { Sequelize, Op, Transaction } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 
 const register_User_has_Group = async (userIds, GroupId) => {
   try {
@@ -124,9 +124,12 @@ const patch_Users_Has_Groups = async (groupId, usersIn, usersOut) => {
     }
 
     // Verifica que todos los usuarios para sacar existan
-    const outUsers = await User.findAll({
+    const outUsers = await UsersHasGroups.findAll({
       where: {
-        id: usersOut,
+        idUser: {
+          [Sequelize.Op.in]: usersOut,
+        },
+        idGroup: groupId,
       },
     });
 
@@ -203,9 +206,12 @@ const findAdminIs = async (groupId) => {
 };
 
 const delete_User_has_Group = async (usersOut, groupId) => {
-  const usersToDel = await User.findAll({
+  const usersToDel = await UsersHasGroups.findAll({
     where: {
-      id: usersOut,
+      idUser: {
+        [Sequelize.Op.in]: usersOut,
+      },
+      idGroup: groupId,
     },
   });
 
@@ -216,13 +222,18 @@ const delete_User_has_Group = async (usersOut, groupId) => {
   const out = await out_Users(usersOut, groupId);
 };
 
-const change_Admin_Has_Group = async (newAdmin, oldAdmin) => {
+const change_Admin_Has_Group = async (newAdmin, oldAdmin, groupId) => {
   const userAdm = [newAdmin, oldAdmin];
+
   const admins = await UsersHasGroups.findAll({
     where: {
-      idUser: userAdm,
+      idUser: {
+        [Sequelize.Op.in]: userAdm,
+      },
+      idGroup: groupId,
     },
   });
+  //---
 
   if (admins.length !== userAdm.length) {
     throw new Error("Some users not found");

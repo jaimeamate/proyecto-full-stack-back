@@ -141,7 +141,7 @@ const change_Admin_Of_Group = async (req, res) => {
         .json({ error: "Invalid input Admin to change or User not found" });
     }
 
-    const result = await change_Admin_Has_Group(newAdmin, oldAdmin);
+    const result = await change_Admin_Has_Group(newAdmin, oldAdmin, groupId);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
