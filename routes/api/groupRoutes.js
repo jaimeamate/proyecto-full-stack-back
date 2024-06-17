@@ -13,6 +13,7 @@ const {
   getGroup_Of_User,
   change_User_Has_Group,
   getActivity_Of_Group,
+  getPayment_Of_Group,
 } = require("@controllers/userHasGroupsController");
 
 //Obtiene los grupos
@@ -45,6 +46,9 @@ router.get("/users/:id_user/group", getGroup_Of_User);
 
 //recupero ACTIVIDAD de un grupo
 router.get("/:id_group/activity", getActivity_Of_Group);
+
+//recupero PAGOS de un grupo DE TODAS LAS ACTIVIDADES ### este lo tengo que ver ####
+router.get("/:id_group/payment", getPayment_Of_Group);
 
 //saca usuarios y agrega a un grupo
 router.patch("/:id_group/users/change", change_User_Has_Group);

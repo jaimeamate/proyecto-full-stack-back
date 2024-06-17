@@ -1,4 +1,10 @@
-const { UsersHasGroups, User, Group, Activity } = require("@models/index");
+const {
+  UsersHasGroups,
+  User,
+  Group,
+  Activity,
+  UsersHasActivities,
+} = require("@models/index");
 const { getGroupWithId } = require("./groupService");
 const { getUserWithId } = require("./userService");
 const { Sequelize, Op } = require("sequelize");
@@ -175,6 +181,46 @@ const find_Activity_of_Group = async (groupId) => {
   }
 };
 
+const findAdminIs = async (groupId) => {
+  try {
+    const adminUser = await UsersHasGroups.findOne({
+      //attributes: ["idUser"], // Selecciona solo la columna idUser
+      where: {
+        idGroup: groupId,
+        isAdmin: true,
+      },
+    });
+    console.log(`Result find is ===>${JSON.stringify(adminUser.dataValues)}`);
+    return (adminIsHere = JSON.stringify(adminUser.dataValues));
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const find_Payment_of_Group = async (groupId) => {
+  try {
+    if (!groupId) {
+      throw new Error("Invalid input");
+    }
+
+    const groups = await getGroupWithId(groupId);
+
+    if (!groups) {
+      throw new Error("Group not found");
+    }
+
+    return await UsersHasActivities.findAll({
+      where: {
+        idActivitie: groupId,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 module.exports = {
   register_User_has_Group,
   find_Users_of_Group,
@@ -182,4 +228,6 @@ module.exports = {
   register_Admin,
   patch_Users_Has_Groups,
   find_Activity_of_Group,
+  find_Payment_of_Group,
+  findAdminIs,
 };

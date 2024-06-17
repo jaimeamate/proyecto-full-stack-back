@@ -66,9 +66,9 @@ POST http://localhost:3030/api/activity/register
 Content-Type: application/json
 
 {
-  "idGroup": 11,
-  "name": "HOTEL",
-  "amount": "55",
+  "idGroup": 12,
+  "name": "BOLICHE",
+  "amount": "60",
   "type": "1",
   "date": "2024-05-01"
 }
@@ -112,8 +112,8 @@ POST http://localhost:3030/api/activity/add-users
 Content-Type: application/json
 
 {
-    "idActivity": 4,
-    "userIds": [6, 7]
+    "idActivity": 1,
+    "userIds": [1, 2]
 }
 
 ### Actualiza usuarios de una actividad
@@ -167,7 +167,7 @@ POST http://localhost:3030/api/group/11/add_user
 Content-Type: application/json
 
 {
-    "userIds":[1,2,4]
+    "userIds":[3,7]
 }
 
 ###Busca usuarios en un grupo
@@ -182,6 +182,12 @@ GET http://localhost:3030/api/group/users/3/group
 GET http://localhost:3030/api/group/11/activity
 
 
+###Recupera PAGOS de un grupo DE TODAS LAS ACTIVIDADES DEL GRUPO
+GET http://localhost:3030/api/group/11/payment
+
+
+
+
 Content-Type: application/json
 
 ###Quita algunos usuarios y agrega otros
@@ -189,8 +195,8 @@ PATCH http://localhost:3030/api/group/11/users/change
 Content-Type: application/json
 
 {
-    "usersIn":[1,2],
-    "usersOut":[3,4]
+    "usersIn":[7],
+    "usersOut":[6]
 }
 
 
