@@ -53,7 +53,7 @@ router.delete("/:id_group/users", delete_Users_Of_Group);
 //saca usuarios y agrega a un grupo
 router.patch("/:id_group/users/change", change_User_Has_Group);
 
-//cambia ADMIN del grupo
+//cambia ADMINISTRADOR del grupo
 router.patch("/:id_group/admin/change", change_Admin_Of_Group);
 
 module.exports = router;

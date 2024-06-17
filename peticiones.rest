@@ -205,7 +205,7 @@ PATCH http://localhost:3030/api/group/11/admin/change
 Content-Type: application/json
 
 {
-    "newAdmin":1,
+    "newAdmin":6,
     "oldAdmin":2
 }
 

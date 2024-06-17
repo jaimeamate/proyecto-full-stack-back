@@ -1,7 +1,13 @@
-const { UsersHasGroups, User, Group, Activity } = require("@models/index");
+const {
+  UsersHasGroups,
+  User,
+  Group,
+  Activity,
+  sequelize,
+} = require("@models/index");
 const { getGroupWithId } = require("./groupService");
 const { getUserWithId } = require("./userService");
-const { Sequelize, Op } = require("sequelize");
+const { Sequelize, Op, Transaction } = require("sequelize");
 
 const register_User_has_Group = async (userIds, GroupId) => {
   try {
@@ -210,6 +216,47 @@ const delete_User_has_Group = async (usersOut, groupId) => {
   const out = await out_Users(usersOut, groupId);
 };
 
+const change_Admin_Has_Group = async (newAdmin, oldAdmin) => {
+  const userAdm = [newAdmin, oldAdmin];
+  const admins = await UsersHasGroups.findAll({
+    where: {
+      idUser: userAdm,
+    },
+  });
+
+  if (admins.length !== userAdm.length) {
+    throw new Error("Some users not found");
+  }
+  try {
+    const transaction = await sequelize.transaction();
+    // Actualiza el antiguo administrador a no administrador
+    await UsersHasGroups.update(
+      { isAdmin: false },
+      {
+        where: { idUser: oldAdmin },
+        transaction,
+      }
+    );
+
+    // Actualiza el nuevo administrador a administrador
+    await UsersHasGroups.update(
+      { isAdmin: true },
+      {
+        where: { idUser: newAdmin },
+        transaction,
+      }
+    );
+
+    // Si todo va bien, confirma la transacción
+    await transaction.commit();
+    return { success: true, message: "Admin roles updated successfully" };
+  } catch (error) {
+    // Si hay un error, revierte la transacción
+    await transaction.rollback();
+    throw error;
+  }
+};
+
 module.exports = {
   register_User_has_Group,
   find_Users_of_Group,
@@ -219,4 +266,5 @@ module.exports = {
   find_Activity_of_Group,
   findAdminIs,
   delete_User_has_Group,
+  change_Admin_Has_Group,
 };
