@@ -8,6 +8,7 @@ const {
   delete_User_has_Group,
   change_Admin_Has_Group,
 } = require("@services/userHasGroupServices");
+const { finally_Find_Groups } = require("../services/userHasGroupServices");
 
 const postUsers_Group = async (req, res) => {
   try {
@@ -44,7 +45,9 @@ const getGroup_Of_User = async (req, res) => {
   try {
     const result = await find_Groups_of_User(req.params.id_user);
     if (result.length > 0) {
-      res.status(200).json(result);
+      const array_Of_idGroups = result.map((item) => item.idGroup);
+      const result_Groups = await finally_Find_Groups(array_Of_idGroups);
+      res.status(200).json(result_Groups);
     } else {
       throw new Error("User without GROUPS");
     }
