@@ -1,8 +1,17 @@
-const { Activity, Group } = require("@models/index");
+const { Activity, User, UsersHasActivities, Group } = require("@models/index");
 
 const getAllActivity = async () => {
   try {
-    return await Activity.findAll();
+    return await Activity.findAll({
+      include: [
+        {
+          model: User,
+          as: 'users',
+          through: UsersHasActivities,
+          attributes: ['id', 'firstName', 'email'],
+        },
+      ],
+    });
   } catch (err) {
     throw err;
   }
