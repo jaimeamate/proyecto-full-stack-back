@@ -5,11 +5,12 @@ POST http://localhost:3030/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "Nico",
-  "lastName": "Laza",
-  "phoneNumber": "55555789",
-  "email": "Nico@gmail.com",
-  "password": "2222"
+  "firstName": "paepas",
+  "lastName": "antoania",
+  "phoneNumber": "123456789",
+  "email": "aaaa@aasdagmaaail.com",
+  "password": "1111",
+  "ind_baja": true
 
 }
 
@@ -97,8 +98,7 @@ PATCH http://localhost:3030/api/activity/1
 Content-Type: application/json
 
 {
- "name": "Vacaciones Marbella",
-  "amount": "213"
+ "idGroup": 5
 }
 
 ### eliminar actividad (MIDDLEWARE)
@@ -147,8 +147,6 @@ GET http://localhost:3030/api/group/
 ### Obtener GRUPO por su id
 GET http://localhost:3030/api/group/5
 
-
-
 ### Modificar GRUPO patch
 PATCH http://localhost:3030/api/group/7
 Content-Type: application/json
@@ -159,7 +157,55 @@ Content-Type: application/json
 }
 
 ### Modificar GRUPO patch
-DELETE  http://localhost:3030/api/group/12
+DELETE  http://localhost:3030/api/group/14
+
+
+### Envío de correo de prueba desde Outlook
+POST http://localhost:3030/api/mail/send
+Content-Type: application/json
+
+{
+    "service": "outlook",
+    "user": "sandra_prueba_full@hotmail.com",
+    "pass": "Prueba88",
+    "to": "folmos@everycode.es",
+    "subject": "prueba desde Outlook",
+    "text": "esto es una prueba desde Outlook11"
+}
+
+### Añade usuarios a una activdad
+
+
+### Envío de correo de prueba desde Gmail
+POST http://localhost:3031/api/mail/send
+Content-Type: application/json
+
+{
+    "service": "gmail",
+    "user": "tu_correo_gmail@gmail.com",
+    "pass": "tu_contraseña_gmail",
+    "to": "destinatario@ejemplo.com",
+    "subject": "prueba desde Gmail",
+    "text": "esto es una prueba desde Gmail"
+}
+
+### Añade usuarios a una activdad
+POST http://localhost:3030/api/activity/4/add-users
+Content-Type: application/json
+
+{
+  "userIds": [11, 12]
+}
+### Actualiza usuarios de una actividad
+PATCH http://localhost:3030/api/activity/4/update-users
+Content-Type: application/json
+
+{
+  "userIds": [7, 9]
+}
+
+### Obtiene los usuarios de una actividad
+GET http://localhost:3030/api/activity/4/users
 
 ##############################    ENDPOINTS user_has_groups    ##############################
 ### Añade un usuario a un grupo

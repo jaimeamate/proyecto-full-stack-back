@@ -1,0 +1,9 @@
+{
+    "rest-client.environmentVariables": {
+        "$shared": {},
+        "$local": {
+            "USER_EMAIL": "sandra_prueba_full@hotmail.com",
+            "USER_PASS": "Pad"
+        }
+    }
+}
