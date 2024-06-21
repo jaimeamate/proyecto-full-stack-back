@@ -14,15 +14,25 @@ Group.belongsToMany(User, {
   foreignKey: "idGroup",
 });
 
+// User.belongsToMany(Activity, {
+//   through: "users_has_activities",
+//   foreignKey: "idUser",
+// });
+// Activity.belongsToMany(User, {
+//   through: "users_has_activities",
+//   foreignKey: "idActivitie",
+// });
+
 User.belongsToMany(Activity, {
   through: "users_has_activities",
   foreignKey: "idUser",
+  as: 'users'
 });
 Activity.belongsToMany(User, {
   through: "users_has_activities",
   foreignKey: "idActivitie",
+  as: 'users'
 });
-
 Group.hasMany(Activity, { foreignKey: "idGroup" });
 Activity.belongsTo(Group, { foreignKey: "idGroup" });
 
