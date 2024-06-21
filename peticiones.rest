@@ -19,7 +19,7 @@ GET http://localhost:3030/api/user/
 
 ### Obtener usuario por su id
 
-GET http://localhost:3030/api/user/14
+GET http://localhost:3030/api/user/6
 
 
 
@@ -29,7 +29,7 @@ Content-Type: application/json
 
 {
   "firstName": "antonio",
-  "lastName": "toni",
+  "lastName": "rico",
   "phoneNumber": "111111111",
   "email": "antonio@gmail.com",
   "pass": "1111"
@@ -67,14 +67,12 @@ POST http://localhost:3030/api/activity/register
 Content-Type: application/json
 
 {
-  "idGroup": 1,
- "name": "Vacas1",
-  "amount": "222",
+  "idGroup": 12,
+  "name": "BOLICHE",
+  "amount": "60",
   "type": "1",
   "date": "2024-05-01"
 }
-
-
 
 
 ### Obtener actividades
@@ -84,28 +82,62 @@ GET http://localhost:3030/api/activity/
 GET http://localhost:3030/api/activity/1
 
 
-### Modificar actividades patch
-PATCH http://localhost:3030/api/activity/4
+### Modificar actividades put
+PUT http://localhost:3030/api/activity/1
+Content-Type: application/json
+
+{
+  "name": "Vacaciones Ibiza",
+  "amount": "333",
+  "type": "0",
+  "date": "2023-08-01"
+}
+
+### Modificar actividades patch (MIDDLEWARE)
+PATCH http://localhost:3030/api/activity/1
 Content-Type: application/json
 
 {
  "idGroup": 5
 }
 
-### eliminar actividad 
+### eliminar actividad (MIDDLEWARE)
 DELETE  http://localhost:3030/api/activity/1
 
 
 ##############################    ENDPOINTS USER    ##############################
 
-##############################    ENDPOINTS GROUPS    ##############################
-
-### Crear grupos
-POST http://localhost:3030/api/group/register
+### Añade usuarios a una activdad
+POST http://localhost:3030/api/activity/add-users
 Content-Type: application/json
 
 {
-  "name": "Viajeros"
+    "idActivity": 1,
+    "userIds": [1, 2]
+}
+
+### Actualiza usuarios de una actividad
+PATCH http://localhost:3030/api/activity/4/update-users
+Content-Type: application/json
+
+{
+  "userIds": [6, 9]
+}
+
+### Obtiene los usuarios de una actividad
+GET http://localhost:3030/api/activity/4/users
+
+
+
+
+##############################    ENDPOINTS GROUPS    ##############################
+
+### Crear grupos
+POST http://localhost:3030/api/group/register/3
+Content-Type: application/json
+
+{
+  "name": "Los Angeles"
 }
 
 ###OBTENER GRUPOS
@@ -113,14 +145,14 @@ GET http://localhost:3030/api/group/
 
 
 ### Obtener GRUPO por su id
-GET http://localhost:3030/api/group/1
+GET http://localhost:3030/api/group/5
 
 ### Modificar GRUPO patch
-PATCH http://localhost:3030/api/group/1
+PATCH http://localhost:3030/api/group/7
 Content-Type: application/json
 
 {
-  "name": "Viaje Rio Turbio"
+  "name": "Viaje Rio CLARO"
   
 }
 
@@ -174,4 +206,57 @@ Content-Type: application/json
 
 ### Obtiene los usuarios de una actividad
 GET http://localhost:3030/api/activity/4/users
+
+##############################    ENDPOINTS user_has_groups    ##############################
+### Añade un usuario a un grupo
+POST http://localhost:3030/api/group/11/add_user
+Content-Type: application/json
+
+{
+    "userIds":[3,4]
+}
+
+###Busca usuarios en un grupo
+GET http://localhost:3030/api/group/11/users
+Content-Type: application/json
+
+###Recupera grupos de un usuario
+GET http://localhost:3030/api/group/users/5/group
+
+
+###Recupera ACTIVIDAD de un grupo
+GET http://localhost:3030/api/group/5/activity
+
+
+###Quita algunos usuarios y agrega otros
+PATCH http://localhost:3030/api/group/11/users/change
+Content-Type: application/json
+
+{
+    "usersIn":[1,2],
+    "usersOut":[3,4]
+}
+
+### Borro usuarios de un grupo
+DELETE  http://localhost:3030/api/group/11/users
+Content-Type: application/json
+
+{
+    "usersOut":[1,2]
+}
+
+
+###Cambio administrador
+PATCH http://localhost:3030/api/group/11/admin/change
+Content-Type: application/json
+
+{
+    "newAdmin":2,
+    "oldAdmin":5
+}
+
+
+
+
+
 

@@ -1,16 +1,23 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 const sequelize = require("@configs/dbConfig");
 
-const UsersHasGroups = sequelize.define('users_has_groups', {
+const UsersHasGroups = sequelize.define(
+  "users_has_groups",
+  {
     idUser: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
+      type: DataTypes.INTEGER,
+      primaryKey: true,
     },
     idGroup: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
+      type: DataTypes.INTEGER,
+      primaryKey: true,
     },
-    isAdmin: DataTypes.BOOLEAN
-}, {  timestamps: false });
+    isAdmin: DataTypes.BOOLEAN,
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  }
+);
 
 module.exports = UsersHasGroups;
