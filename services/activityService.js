@@ -2,7 +2,7 @@ const { Activity, User, UsersHasActivities, Group } = require("@models/index");
 
 const getAllActivity = async () => {
   try {
-    return await Activity.findAll({
+    const activities = await Activity.findAll({
       include: [
         {
           model: User,
@@ -12,6 +12,17 @@ const getAllActivity = async () => {
         },
       ],
     });
+
+    // Calcula el porcentaje que cada usuario debe pagar y elimina el campo 'users_has_activities'
+    activities.forEach(activity => {
+      const userCount = activity.users.length;
+      activity.users.forEach(user => {
+        user.dataValues.amount = (activity.amount / userCount).toFixed(2);
+        delete user.dataValues.users_has_activities;
+      });
+    });
+
+    return activities;
   } catch (err) {
     throw err;
   }
