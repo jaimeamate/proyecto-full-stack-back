@@ -103,7 +103,7 @@ const finally_Find_Groups = async (id_Of_Groups) => {
   }
 };
 
-const finally_Find_Users = async (id_Of_Users) => {
+/*const finally_Find_Users = async (id_Of_Users) => {
   try {
     return await User.findAll({
       where: {
@@ -114,6 +114,34 @@ const finally_Find_Users = async (id_Of_Users) => {
     console.error(error);
     throw error;
   }
+};*/
+
+const finally_Find_Users = async (id_Of_Users) => {
+  try {
+    return await User.findAll({
+      where: {
+        id: {
+          [Op.in]: id_Of_Users,
+        },
+      },
+      attributes: ["id", "firstName", "lastName", "email"], // Me traigo solo esto
+    });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const admin_Find_Users = async (result_Users, AdminIs) => {
+  const usersWithIsAdmin = result_Users.map((user) => ({
+    ...user.dataValues,
+    isAdmin: false, // Aquí defines la lógica para determinar isAdmin
+  }));
+
+  return usersWithIsAdmin.map((user) => ({
+    ...user,
+    isAdmin: user.id === AdminIs,
+  }));
 };
 
 const register_Admin = async (name) => {
@@ -306,4 +334,5 @@ module.exports = {
   change_Admin_Has_Group,
   finally_Find_Groups,
   finally_Find_Users,
+  admin_Find_Users,
 };
