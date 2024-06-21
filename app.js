@@ -7,17 +7,18 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
 
-const bodyParser = require("body-parser");
-const mailRoutes = require("./routes/mailRoutes");
+const bodyParser = require('body-parser');
+const mailRoutes = require('./routes/mailRoutes');
+
 
 var app = express();
-const apiRouter = require("@routes/api");
+const apiRouter = require('@routes/api');
+
 
 const port = process.env.PORT || 3000;
-const cors = require("cors");
+
+
 
 //const port1 = process.env.PORT1 || 3001;
 
@@ -32,30 +33,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api", apiRouter);
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-const { sequelize } = require("@models/index");
-// sequelize.sync()
-//     .then(() => {
-//         app.listen(process.env.PORT || 3000, () => {
-//             console.log(`Server is running on port ${process.env.PORT || 3000}`);
-//         });
-//     })
-//     .catch(err => {
-//         console.error('Unable to connect to the database:', err);
-//     });
-sequelize
-  .sync({ force: false })
-  .then(() => {
-    console.log("Database synchronized");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
-  });
+
 
 app.use(bodyParser.json());
-app.use("/api/mail", mailRoutes);
+app.use('/api/mail', mailRoutes);
+
 
 // db.sequelize.sync({ force: false }).then(() => {
 //     console.log('Database synchronized');
@@ -80,6 +62,8 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+
+
 
 //app.listen(port1, () => {
 //   console.log(`Servidor corriendo en el puerto ${port1}`);
