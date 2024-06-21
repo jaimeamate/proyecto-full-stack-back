@@ -103,6 +103,19 @@ const finally_Find_Groups = async (id_Of_Groups) => {
   }
 };
 
+const finally_Find_Users = async (id_Of_Users) => {
+  try {
+    return await User.findAll({
+      where: {
+        id: id_Of_Users,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 const register_Admin = async (name) => {
   try {
     const newUserHGroup = new UsersHasGroups(name);
@@ -292,4 +305,5 @@ module.exports = {
   delete_User_has_Group,
   change_Admin_Has_Group,
   finally_Find_Groups,
+  finally_Find_Users,
 };
