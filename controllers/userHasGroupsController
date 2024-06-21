@@ -7,6 +7,8 @@ const {
   findAdminIs,
   delete_User_has_Group,
   change_Admin_Has_Group,
+  finally_Find_Users,
+  admin_Find_Users,
 } = require("@services/userHasGroupServices");
 const { finally_Find_Groups } = require("../services/userHasGroupServices");
 
@@ -29,9 +31,19 @@ const postUsers_Group = async (req, res) => {
 
 const getUsers_Of_Group = async (req, res) => {
   try {
+    const adminIs = await findAdminIs(req.params.id_group);
+    adminIsHere = JSON.parse(adminIs);
+
     const result = await find_Users_of_Group(req.params.id_group);
     if (result.length > 0) {
-      res.status(200).json(result);
+      const array_Of_Users = result.map((item) => item.idUser);
+      const result_Users = await finally_Find_Users(array_Of_Users);
+      const result_Users_Admin = await admin_Find_Users(
+        result_Users,
+        adminIsHere.idUser
+      );
+
+      res.status(200).json(result_Users_Admin);
     } else {
       throw new Error("Group without users");
     }
