@@ -110,9 +110,9 @@ const editActivityPatch = async (id, updatedFields) => {
   }
 };
 
-const registerActivity = async ({ idGroup, name, amount, type, date }) => {
+const registerActivity = async ({ idGroup, name, amount, type, date, idPayer }) => {
   try {
-    const newActivity = new Activity({ idGroup, name, amount, type, date });
+    const newActivity = new Activity({ idGroup, name, amount, type, date, idPayer });
     return await newActivity.save();
   } catch (err) {
     console.log(err);
