@@ -1,5 +1,5 @@
 const { registerUser, createToken } = require('@services/authService');
-const { getUserByEmail } = require('@services/userService');
+const { getUserWithEmail } = require('@services/userService');
 const bcrypt = require("bcrypt");
 
 const createUser = async(req, res) =>{
@@ -17,7 +17,7 @@ const createUser = async(req, res) =>{
 const login = async (req, res) => {
     try{
         //Obtengo el usuario a traves de su e-mail
-        const user = await getUserByEmail(req.body.email);
+        const user = await getUserWithEmail(req.body.email);
         if(!user){
             res.status(404).json({error: 'User does not exist'});
         }
