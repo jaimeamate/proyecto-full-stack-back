@@ -8,8 +8,7 @@ const {
     delete_User_has_Group,
     change_Admin_Has_Group,
     finally_Find_Users,
-    admin_Find_Users,
-    inviteUsersToGroup
+    admin_Find_Users
 } = require("@services/userHasGroupServices");
 const { finally_Find_Groups } = require("../services/userHasGroupServices");
 
@@ -183,6 +182,5 @@ module.exports = {
     change_User_Has_Group,
     getActivity_Of_Group,
     delete_Users_Of_Group,
-    change_Admin_Of_Group,
-    inviteUsers
+    change_Admin_Of_Group
 };

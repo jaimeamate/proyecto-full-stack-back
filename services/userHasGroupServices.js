@@ -392,6 +392,5 @@ module.exports = {
     change_Admin_Has_Group,
     finally_Find_Groups,
     finally_Find_Users,
-    admin_Find_Users,
-    inviteUsersToGroup
+    admin_Find_Users
 };

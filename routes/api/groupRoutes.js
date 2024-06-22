@@ -40,9 +40,6 @@ router.delete("/:id", deleteGroup);
 router.post("/:id_group/add_user", postUsers_Group);
 
 
-//Invitación a usuarios por su e-mail (registrados o no)
-router.post("/:id/invitation", inviteUsers);
-
 //recupero usuarios de un Grupo
 router.get("/:id_group/users", getUsers_Of_Group);
 
