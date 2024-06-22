@@ -21,7 +21,7 @@ const postUsers_Group = async (req, res) => {
         const idGroup = req.params.id_group;
         // VER SI EL EMAIL EXISTE EN LA BBDD
         // console.log(email)
-        const {datavalues: user} = await getUserWithEmail(email)
+        const {dataValues: user} = await getUserWithEmail(email)
         console.log('LOG',user)
 
         if(!user){

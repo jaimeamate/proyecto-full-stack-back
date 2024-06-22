@@ -25,6 +25,7 @@ let transporter = nodemailer.createTransport({
 const sendEmail = (to, subject, htmlContent) => {
     let mailOptions = {
         from: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
         to,
         subject,
         html: htmlContent
@@ -51,11 +52,9 @@ const renderHtml = async (userEmail, groupName) => {
     }
 };
 
-const register_User_has_Group = async (userIds, GroupId) => {
+const register_User_has_Group = async (userId, GroupId) => {
     try {
-        if (!Array.isArray(userIds) || !GroupId) {
-            throw new Error("Invalid input");
-        }
+
 
         const hasgroup = await Group.findByPk(GroupId);
 
@@ -64,30 +63,28 @@ const register_User_has_Group = async (userIds, GroupId) => {
         }
 
         // Verifica que todos los usuarios existen
-        const users = await User.findAll({
-            where: {
-                id: userIds,
-            },
-        });
+        const user = await User.findByPk(userId);
 
-        if (users.length !== userIds.length) {
+
+        if (user.dataValues.id !== userId) {
             throw new Error("Some users not found");
         }
 
-        for (const user of users) {
-            const email = user.email;
-            const groupName = hasgroup.name;
-            const htmlContent = await renderHtml(email, groupName);
-            console.log('Sending email to:', email, 'with content:', htmlContent); // Depuración
-            sendEmail(email, `Invitación a grupo ${hasgroup.name}`, htmlContent);
-        }
+        
+        const email = user.email;
+        const groupName = hasgroup.name;
+        const htmlContent = await renderHtml(email, groupName);
+        console.log('Sending email to:', email, 'with content:', htmlContent); // Depuración
+        sendEmail(email, `Invitación a grupo ${hasgroup.name}`, htmlContent);
+        
 
-        const userGroups = userIds.map((userId) => ({
+        const userGroup = {
             idUser: userId,
             idGroup: GroupId,
-        }));
+        };
+        
 
-        return await UsersHasGroups.bulkCreate(userGroups);
+        return await UsersHasGroups.bulkCreate(userGroup);
     } catch (error) {
         console.error(error);
         throw error;
