@@ -54,7 +54,7 @@ const sendEmail = (to, subject, htmlContent) => {
 
 const renderHtml = async (template, data) => {
     try {
-        let templatePath = path.join(__dirname, '../html', template);
+        let templatePath = path.join(__dirname, '../html', 'invitation.ejs');
         const html = await ejs.renderFile(templatePath, data);
         return html;
     } catch (error) {
@@ -84,7 +84,7 @@ const register_User_has_Group = async (userId, GroupId) => {
         
         const email = user.email;
         const groupName = hasgroup.name;
-        const htmlContent = await renderHtml(email, groupName);
+        const htmlContent = await renderHtml(email, {groupName, email});
         console.log('Sending email to:', email, 'with content:', htmlContent); // Depuración
         sendEmail(email, `Invitación a grupo ${hasgroup.name}`, htmlContent);
         
