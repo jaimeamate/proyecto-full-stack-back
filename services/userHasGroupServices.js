@@ -38,18 +38,79 @@ const sendEmail = (to, subject, htmlContent) => {
     });
 };
 
-const renderHtml = async (userEmail, groupName) => {
+// const renderHtml = async (userEmail, groupName) => {
+//     try {
+//         let templatePath = path.join(__dirname, '../html', 'invitation.ejs');
+//         console.log('Template Path:', templatePath); // Depuración
+//         const html = await ejs.renderFile(templatePath, {userEmail, groupName});
+//         console.log('HTML Rendered:', html); // Depuración
+//         return html;
+//     } catch (error) {
+//         console.error('Error al renderizar el HTML:', error);
+//         return '<p>Error loading HTML content</p>';
+//     }
+// };
+
+const renderHtml = async (template, data) => {
     try {
-        let templatePath = path.join(__dirname, '../html', 'invitation.ejs');
-        console.log('Template Path:', templatePath); // Depuración
-        const html = await ejs.renderFile(templatePath, {userEmail, groupName});
-        console.log('HTML Rendered:', html); // Depuración
+        let templatePath = path.join(__dirname, '../html', template);
+        const html = await ejs.renderFile(templatePath, data);
         return html;
     } catch (error) {
         console.error('Error al renderizar el HTML:', error);
         return '<p>Error loading HTML content</p>';
     }
 };
+
+const inviteUsersToGroup = async (groupId, emails) => {
+    try {
+        if (!Array.isArray(emails) || !groupId) {
+            throw new Error("Invalid input data");
+        }
+
+        const group = await Group.findByPk(groupId);
+        if (!group) {
+            throw new Error("Group not found");
+        }
+
+        const users = await User.findAll({
+            where: {
+                email: {
+                    [Sequelize.Op.in]: emails,
+                },
+            },
+        });
+
+        const registeredEmails = users.map(user => user.email);
+        const nonRegisteredEmails = emails.filter(email => !registeredEmails.includes(email));
+
+        for (const user of users) {
+            const email = user.email;
+            const groupName = group.name;
+            const htmlContent = await renderHtml('invitation.ejs', { userEmail: email, groupName });
+            sendEmail(email, `Invitación a grupo ${group.name}`, htmlContent);
+
+            await UsersHasGroups.create({
+                idUser: user.id,
+                idGroup: groupId,
+            });
+        }
+
+        for (const email of nonRegisteredEmails) {
+            const htmlContent = await renderHtml('new_user_invitation.ejs', { userEmail: email, groupName: group.name });
+            sendEmail(email, `Te invitamos a unirte al grupo ${group.name}`, htmlContent);
+        }
+
+        return {
+            registered: registeredEmails,
+            nonRegistered: nonRegisteredEmails,
+        };
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 
 const register_User_has_Group = async (userIds, GroupId) => {
     try {
@@ -78,7 +139,6 @@ const register_User_has_Group = async (userIds, GroupId) => {
             const email = user.email;
             const groupName = hasgroup.name;
             const htmlContent = await renderHtml(email, groupName);
-            console.log('Sending email to:', email, 'with content:', htmlContent); // Depuración
             sendEmail(email, `Invitación a grupo ${hasgroup.name}`, htmlContent);
         }
 
@@ -385,4 +445,5 @@ module.exports = {
     finally_Find_Groups,
     finally_Find_Users,
     admin_Find_Users,
+    inviteUsersToGroup
 };

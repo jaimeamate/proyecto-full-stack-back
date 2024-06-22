@@ -137,7 +137,7 @@ POST http://localhost:3030/api/group/register/3
 Content-Type: application/json
 
 {
-  "name": "prueba emaiasdasdal"
+  "name": "aaaaaaal"
 }
 
 ###OBTENER GRUPOS
@@ -253,7 +253,12 @@ Content-Type: application/json
 }
 
 
+###Invitación a usuarios
+POST http://localhost:3030/api/group/11/invitation
+Content-Type: application/json
 
-
+{
+  "emails": ["foasdasds@everycode.es", "frdasdasdasdsdev@gmail.com"]
+}
 
 

@@ -15,6 +15,7 @@ const {
   getActivity_Of_Group,
   delete_Users_Of_Group,
   change_Admin_Of_Group,
+  inviteUsers
 } = require("@controllers/userHasGroupsController");
 
 //Obtiene los grupos
@@ -37,6 +38,10 @@ router.delete("/:id", deleteGroup);
 //ingreso un usuario a un Grupo
 
 router.post("/:id_group/add_user", postUsers_Group);
+
+
+//Invitación a usuarios por su e-mail (registrados o no)
+router.post("/:id/invitation", inviteUsers);
 
 //recupero usuarios de un Grupo
 router.get("/:id_group/users", getUsers_Of_Group);

@@ -9,8 +9,20 @@ const {
     change_Admin_Has_Group,
     finally_Find_Users,
     admin_Find_Users,
+    inviteUsersToGroup
 } = require("@services/userHasGroupServices");
 const { finally_Find_Groups } = require("../services/userHasGroupServices");
+
+const inviteUsers = async (req, res) => {
+    const { emails } = req.body;
+
+    try {
+        const result = await inviteUsersToGroup(req.params.id, emails);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 const postUsers_Group = async (req, res) => {
     try {
@@ -172,4 +184,5 @@ module.exports = {
     getActivity_Of_Group,
     delete_Users_Of_Group,
     change_Admin_Of_Group,
+    inviteUsers
 };
