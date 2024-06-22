@@ -1,12 +1,41 @@
-const { Group } = require("@models/index");
+const { Group, User, UsersHasGroups } = require("@models/index");
 
 const getAllGroups = async () => {
   try {
-    const groups = await Group.findAll();
-    if (groups.length !== 0) {
-      return groups;
+    const groups = await Group.findAll({
+      include: [
+        {
+          model: User,
+          as: 'groups',
+          through: {
+            model: UsersHasGroups,
+            attributes: ['isAdmin'],
+          },
+          attributes: ['id', 'firstName', 'email']
+        },
+      ],
+    });
+
+    if (groups.length === 0) {
+      return {};
     }
-    return {};
+
+    // Transforma el resultado para cambiar 'groups' a 'users' y mover 'isAdmin' al nivel superior
+    const result = groups.map(group => {
+      const transformedGroup = {
+        ...group.toJSON(),
+        users: group.groups.map(user => ({
+          id: user.id,
+          firstName: user.firstName,
+          email: user.email,
+          isAdmin: user.users_has_groups.isAdmin
+        }))
+      };
+      delete transformedGroup.groups;
+      return transformedGroup;
+    });
+
+    return result;
   } catch (err) {
     console.log(err);
     throw err;
@@ -15,11 +44,39 @@ const getAllGroups = async () => {
 
 const getGroupWithId = async (id) => {
   try {
-    const group = await Group.findByPk(id);
+    const group = await Group.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: 'groups',
+          through: {
+            model: UsersHasGroups,
+            attributes: ['isAdmin'],
+          },
+          attributes: ['id', 'firstName', 'email']
+        },
+      ],
+    });
+
     if (!group) {
       throw new Error("Group not found");
     }
-    return group;
+
+    // Transformael resultado para cambiar 'groups' a 'users' y mover 'isAdmin' al nivel superior
+    const result = {
+      ...group.toJSON(),
+      users: group.groups.map(user => ({
+        id: user.id,
+        firstName: user.firstName,
+        email: user.email,
+        isAdmin: user.users_has_groups.isAdmin
+      }))
+    };
+
+    // Eliminar la propiedad 'groups' del resultado
+    delete result.groups;
+
+    return result;
   } catch (err) {
     throw err;
   }

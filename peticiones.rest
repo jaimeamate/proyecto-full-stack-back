@@ -145,7 +145,7 @@ GET http://localhost:3030/api/group/
 
 
 ### Obtener GRUPO por su id
-GET http://localhost:3030/api/group/5
+GET http://localhost:3030/api/group/11
 
 ### Modificar GRUPO patch
 PATCH http://localhost:3030/api/group/7
