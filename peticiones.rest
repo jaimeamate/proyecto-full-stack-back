@@ -168,7 +168,7 @@ Content-Type: application/json
     "service": "outlook",
     "user": "sandra_prueba_full@hotmail.com",
     "pass": "Prueba88",
-    "to": "folmos@everycode.es",
+    "to": "jaimeamate@hotmail.com",
     "subject": "prueba desde Outlook",
     "text": "esto es una prueba desde Outlook11"
 }
@@ -206,19 +206,26 @@ GET http://localhost:3031/api/activity/10/users
 
 ##############################    ENDPOINTS user_has_groups    ##############################
 ### Añade un usuario a un grupo
-POST http://localhost:3030/api/group/8/add_user
+POST http://localhost:3030/api/group/227/add_user
 Content-Type: application/json
 
 {
-    "userIds":[13]
+    "userIds":[22]
+}
+### Añade un usuario a un grupo
+POST http://localhost:3030/api/group/226/add_user
+Content-Type: application/json
+
+{
+    "email": "test@test.com"
 }
 
 ###Busca usuarios en un grupo
-GET http://localhost:3030/api/group/11/users
+GET http://localhost:3030/api/group/226/users
 Content-Type: application/json
 
 ###Recupera grupos de un usuario
-GET http://localhost:3030/api/group/users/5/group
+GET http://localhost:3030/api/group/users/21/group
 
 
 ###Recupera ACTIVIDAD de un grupo

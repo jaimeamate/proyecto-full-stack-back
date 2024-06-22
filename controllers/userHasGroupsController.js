@@ -12,16 +12,27 @@ const {
 } = require("@services/userHasGroupServices");
 const { finally_Find_Groups } = require("../services/userHasGroupServices");
 
+const { getUserWithEmail } = require("@services/userService")
+
 const postUsers_Group = async (req, res) => {
     try {
-        const { userIds } = req.body;
+        // console.log(req.body)
+        const { email } = req.body;
         const idGroup = req.params.id_group;
+        // VER SI EL EMAIL EXISTE EN LA BBDD
+        // console.log(email)
+        const {datavalues: user} = await getUserWithEmail(email)
+        console.log('LOG',user)
 
-        if (!idGroup || !Array.isArray(userIds) || userIds.length === 0) {
-            return res.status(400).json({ error: "Invalid input data" });
+        if(!user){
+            return res.status(400).json({ error: `User with ${user.email} not exists` });
         }
 
-        const result = await register_User_has_Group(userIds, idGroup);
+        // if (!idGroup || !Array.isArray(userIds) || userIds.length === 0) {
+        //     return res.status(400).json({ error: "Invalid input data" });
+        // }
+
+        const result = await register_User_has_Group(user.id, idGroup);
         res.status(200).json(result);
     } catch (err) {
         console.error(err);
