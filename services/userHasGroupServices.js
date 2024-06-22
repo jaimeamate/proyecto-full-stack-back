@@ -95,7 +95,7 @@ const register_User_has_Group = async (userId, GroupId) => {
         };
         
 
-        return await UsersHasGroups.bulkCreate(userGroup);
+        return await UsersHasGroups.create(userGroup);
     } catch (error) {
         console.error(error);
         throw error;
