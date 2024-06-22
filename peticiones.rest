@@ -166,8 +166,8 @@ Content-Type: application/json
 
 {
     "service": "outlook",
-    "user": "sandra_prueba_full@hotmail.com",
-    "pass": "Prueba88",
+    "user": "jaime-prueba-8899@outlook.com",
+    "pass": "prueba8899",
     "to": "jaimeamate@hotmail.com",
     "subject": "prueba desde Outlook",
     "text": "esto es una prueba desde Outlook11"
