@@ -14,6 +14,7 @@ const {
 const { finally_Find_Groups } = require("../services/userHasGroupServices");
 
 const { getUserWithEmail } = require("@services/userService");
+const { getGroupWithId } = require("../services/groupService");
 
 const postUsers_Group = async (req, res) => {
   try {
@@ -172,7 +173,6 @@ const change_Admin_Of_Group = async (req, res) => {
 
 const deleteActivity_Of_Group = async (req, res) => {
   const groupId = req.params.id_group;
-  console.log("Este grupo " + groupId);
 
   if (!groupId) {
     return res.status(400).json({ error: "Invalid input data" });
@@ -181,9 +181,9 @@ const deleteActivity_Of_Group = async (req, res) => {
   const result_activities = await find_Activity_of_Group(groupId);
   if (result_activities.length > 0) {
     const result = await finally_Del_Activ_Of_Groups(groupId);
-    res.status(200).json(result);
+    res.status(200).json({ ok: "Activities deleted" });
   } else {
-    res.status(404).json("Group without activities");
+    res.status(404).json({ error: "Group without activities" });
   }
 };
 
