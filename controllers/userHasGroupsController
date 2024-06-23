@@ -173,7 +173,9 @@ const change_Admin_Of_Group = async (req, res) => {
 
 const deleteActivity_Of_Group = async (req, res) => {
   const groupId = req.params.id_group;
-
+  // faltaria controlar que exista el grupo
+  // no se por que me rompe la ejecucion el control de que exista
+  // y en otros ends anda bien
   if (!groupId) {
     return res.status(400).json({ error: "Invalid input data" });
   }
