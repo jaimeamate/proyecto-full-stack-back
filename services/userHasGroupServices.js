@@ -365,6 +365,13 @@ const change_Admin_Has_Group = async (newAdmin, oldAdmin, groupId) => {
 
 const finally_Del_Activ_Of_Groups = async (id) => {
   try {
+    //********
+    const hasgroup = await Group.findByPk(id);
+
+    if (!hasgroup) {
+      throw new Error("Group not found");
+    }
+    //********
     const result = await Activity.destroy({
       where: {
         idGroup: id,

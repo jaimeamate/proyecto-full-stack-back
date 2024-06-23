@@ -240,11 +240,11 @@ GET http://localhost:3030/api/group/users/3/group
 
 
 ###Recupera ACTIVIDAD de un grupo
-GET http://localhost:3030/api/group/11/activity
+GET http://localhost:3030/api/group/25/activity
 
 
 ###Delete ACTIVIDAD de un grupo <=====>
-DELETE http://localhost:3030/api/group/11/activity
+DELETE http://localhost:3030/api/group/25/activity
 
 
 
