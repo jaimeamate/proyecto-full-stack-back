@@ -54,8 +54,15 @@ const getUsers_Of_Group = async (req, res) => {
                 result_Users,
                 adminIsHere.idUser
             );
+            const result_final = result_Users_Admin.map(u => {
+                const userPercent = result.find(item => item.dataValues.idUser === u.id);
+                return {
+                    ...u,
+                    percent: userPercent ? userPercent.dataValues.percent : null
+                };
+            });
 
-            res.status(200).json(result_Users_Admin);
+            res.status(200).json(result_final);
         } else {
             throw new Error("Group without users");
         }
@@ -83,23 +90,25 @@ const getGroup_Of_User = async (req, res) => {
 
 const change_User_Has_Group = async (req, res) => {
     try {
-        const { usersIn } = req.body;
+        const payload = req.body;
         const groupId = req.params.id_group;
-        const percent = req.body.percent;
 
         if (
             !groupId ||
-            !Array.isArray(usersIn) ||
-            usersIn.length === 0 
+            !Array.isArray(payload) ||
+            payload.length === 0 
         ) {
             return res.status(400).json({ error: "Invalid input data" });
         }
+
+        const userIds = payload.map(user => user.userId);
+        const percents = payload.map(user => user.percent);
         // empiezo el control de admin
         const adminIs = await findAdminIs(groupId);
         adminIsHere = JSON.parse(adminIs);
 
 
-        const result = await patch_Users_Has_Groups(groupId, usersIn, percent);
+        const result = await patch_Users_Has_Groups(groupId, userIds, percents);
         res.status(200).json(result);
     } catch (err) {
         console.error(err);

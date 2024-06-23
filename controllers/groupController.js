@@ -31,7 +31,7 @@ const createGroup = async (req, res) => {
   try {
     const result = await registerGroup(req.body);
 
-    const name = { idUser: req.params.id_user, idGroup: result.id, isAdmin: 1 };
+    const name = { idUser: req.params.id_user, idGroup: result.id, isAdmin: 1 , percent: 0};
 
     const admin = await register_Admin(name);
 

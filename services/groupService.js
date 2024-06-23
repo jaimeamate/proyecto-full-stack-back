@@ -51,7 +51,7 @@ const getGroupWithId = async (id) => {
           as: 'groups',
           through: {
             model: UsersHasGroups,
-            attributes: ['isAdmin'],
+            attributes: ['isAdmin','percent'],
           },
           attributes: ['id', 'firstName', 'email']
         },
@@ -69,7 +69,8 @@ const getGroupWithId = async (id) => {
         id: user.id,
         firstName: user.firstName,
         email: user.email,
-        isAdmin: user.users_has_groups.isAdmin
+        isAdmin: user.users_has_groups.isAdmin,
+        percent: user.users_has_groups.percent
       }))
     };
 
