@@ -13,7 +13,7 @@ const registerUser = async({firstName, lastName, phoneNumber, email, password, i
 };
 
 const createToken = (user) => {
-    const payload = { user_id: user.id, username: user.username, email: user.email, role: "admin", ind_baja: user.ind_baja };
+    const payload = { user_id: user.id, username: user.username, email: user.email, role: "admin", firstName: user.firstName };
     const options = { expiresIn: tokenExpiration };
 
     return jwt.sign(payload, process.env.JWT_SECRET_KEY, options);
