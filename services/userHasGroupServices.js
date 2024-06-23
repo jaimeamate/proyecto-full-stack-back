@@ -157,16 +157,16 @@ const finally_Find_Groups = async (id_Of_Groups) => {
 };
 
 /*const finally_Find_Users = async (id_Of_Users) => {
-  try {
-    return await User.findAll({
-      where: {
-        id: id_Of_Users,
-      },
-    });
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+try {
+  return await User.findAll({
+    where: {
+      id: id_Of_Users,
+    },
+  });
+} catch (error) {
+  console.error(error);
+  throw error;
+}
 };*/
 
 const finally_Find_Users = async (id_Of_Users) => {
@@ -371,7 +371,6 @@ const finally_Del_Activ_Of_Groups = async (id) => {
       },
     });
     return result;
-    //return { message: "Activity of Group " + id + " deleted successfully" };
   } catch (err) {
     throw err;
   }
@@ -390,4 +389,5 @@ module.exports = {
   finally_Find_Groups,
   finally_Find_Users,
   admin_Find_Users,
+  finally_Del_Activ_Of_Groups,
 };

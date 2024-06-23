@@ -13,16 +13,30 @@ const {
 } = require("@services/userHasGroupServices");
 const { finally_Find_Groups } = require("../services/userHasGroupServices");
 
+const { getUserWithEmail } = require("@services/userService");
+
 const postUsers_Group = async (req, res) => {
   try {
-    const { userIds } = req.body;
+    // console.log(req.body)
+    const { email } = req.body;
     const idGroup = req.params.id_group;
+    const percent = req.body.percent;
+    // VER SI EL EMAIL EXISTE EN LA BBDD
+    // console.log(email)
+    const { dataValues: user } = await getUserWithEmail(email);
+    console.log("LOG", user);
 
-    if (!idGroup || !Array.isArray(userIds) || userIds.length === 0) {
-      return res.status(400).json({ error: "Invalid input data" });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ error: `User with ${user.email} not exists` });
     }
 
-    const result = await register_User_has_Group(userIds, idGroup);
+    // if (!idGroup || !Array.isArray(userIds) || userIds.length === 0) {
+    //     return res.status(400).json({ error: "Invalid input data" });
+    // }
+
+    const result = await register_User_has_Group(user.id, idGroup, percent);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
@@ -72,27 +86,18 @@ const getGroup_Of_User = async (req, res) => {
 
 const change_User_Has_Group = async (req, res) => {
   try {
-    const { usersIn, usersOut } = req.body;
+    const { usersIn } = req.body;
     const groupId = req.params.id_group;
+    const percent = req.body.percent;
 
-    if (
-      !groupId ||
-      !Array.isArray(usersIn) ||
-      !Array.isArray(usersOut) ||
-      usersIn.length === 0 ||
-      usersOut.length === 0
-    ) {
+    if (!groupId || !Array.isArray(usersIn) || usersIn.length === 0) {
       return res.status(400).json({ error: "Invalid input data" });
     }
     // empiezo el control de admin
     const adminIs = await findAdminIs(groupId);
     adminIsHere = JSON.parse(adminIs);
 
-    if (usersOut.includes(adminIsHere.idUser)) {
-      return res.status(400).json({ error: "Is an Admin to delete" });
-    }
-
-    const result = await patch_Users_Has_Groups(groupId, usersIn, usersOut);
+    const result = await patch_Users_Has_Groups(groupId, usersIn, percent);
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
@@ -173,14 +178,13 @@ const deleteActivity_Of_Group = async (req, res) => {
     return res.status(400).json({ error: "Invalid input data" });
   }
 
-  const groups = await getGroupWithId(groupId);
-
-  if (!groups) {
-    return res.status(400).json({ error: "Group not found" });
+  const result_activities = await find_Activity_of_Group(groupId);
+  if (result_activities.length > 0) {
+    const result = await finally_Del_Activ_Of_Groups(groupId);
+    res.status(200).json(result);
+  } else {
+    res.status(404).json("Group without activities");
   }
-
-  const result = await finally_Del_Activ_Of_Groups(groupId);
-  res.status(200).json(result);
 };
 
 module.exports = {

@@ -48,9 +48,6 @@ router.get("/users/:id_user/group", getGroup_Of_User);
 //recupero ACTIVIDAD de un grupo
 router.get("/:id_group/activity", getActivity_Of_Group);
 
-//delete ACTIVIDADES de un grupo
-router.delete("/:id_group/activity", deleteActivity_Of_Group);
-
 //borro USUARIOS de un grupo
 router.delete("/:id_group/users", delete_Users_Of_Group);
 
@@ -59,5 +56,8 @@ router.patch("/:id_group/users/change", change_User_Has_Group);
 
 //cambia ADMINISTRADOR del grupo
 router.patch("/:id_group/admin/change", change_Admin_Of_Group);
+
+//delete ACTIVIDADES de un grupo
+router.delete("/:id_group/activity", deleteActivity_Of_Group);
 
 module.exports = router;

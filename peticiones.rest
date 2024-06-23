@@ -112,8 +112,8 @@ POST http://localhost:3030/api/activity/add-users
 Content-Type: application/json
 
 {
-    "idActivity": 1,
-    "userIds": [1, 2]
+    "idActivity": 2,
+    "userIds": [5]
 }
 
 ### Actualiza usuarios de una actividad
@@ -206,12 +206,12 @@ GET http://localhost:3031/api/activity/10/users
 
 ##############################    ENDPOINTS user_has_groups    ##############################
 ### Añade un usuario a un grupo
-POST http://localhost:3030/api/group/1/add_user
+POST http://localhost:3030/api/group/11/add_user
 Content-Type: application/json
 
 {
-    "userIds":[1],
-    "email":"jdeking14@gmail.com",
+    "userIds":[5],
+    "email":"pepasas@gmaaail.com",
     "percent":10
 }
 ###PARA MODIFICAR USER HAS GROUPS
@@ -219,7 +219,7 @@ PATCH http://localhost:3030/api/group/1/users/change
 Content-Type: application/json
 
 {
-    "usersIn":[1,2],
+    "usersIn":[3],
     "groupId":"2",
     "percent":20
 }
@@ -232,11 +232,11 @@ Content-Type: application/json
 }
 
 ###Busca usuarios en un grupo
-GET http://localhost:3030/api/group/226/users
+GET http://localhost:3030/api/group/11/users
 Content-Type: application/json
 
 ###Recupera grupos de un usuario
-GET http://localhost:3030/api/group/users/21/group
+GET http://localhost:3030/api/group/users/3/group
 
 
 ###Recupera ACTIVIDAD de un grupo
@@ -245,6 +245,8 @@ GET http://localhost:3030/api/group/11/activity
 
 ###Delete ACTIVIDAD de un grupo <=====>
 DELETE http://localhost:3030/api/group/11/activity
+
+
 
 ###Quita algunos usuarios y agrega otros
 PATCH http://localhost:3030/api/group/5/users/change
@@ -260,7 +262,7 @@ DELETE  http://localhost:3030/api/group/11/users
 Content-Type: application/json
 
 {
-    "usersOut":[1,2]
+    "usersOut":[5,6]
 }
 
 
