@@ -191,7 +191,7 @@ const finally_Find_Users = async (id_Of_Users) => {
     }
 };
 
-const admin_Find_Users = async (result_Users, AdminIs) => {
+const admin_Find_Users = async (result_Users, AdminIs, percent) => {
     const usersWithIsAdmin = result_Users.map((user) => ({
         ...user.dataValues,
         isAdmin: false, // Aquí defines la lógica para determinar isAdmin
@@ -200,6 +200,7 @@ const admin_Find_Users = async (result_Users, AdminIs) => {
     return usersWithIsAdmin.map((user) => ({
         ...user,
         isAdmin: user.id === AdminIs,
+        percent: percent
     }));
 };
 

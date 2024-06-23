@@ -52,7 +52,8 @@ const getUsers_Of_Group = async (req, res) => {
             const result_Users = await finally_Find_Users(array_Of_Users);
             const result_Users_Admin = await admin_Find_Users(
                 result_Users,
-                adminIsHere.idUser
+                adminIsHere.idUser,
+                adminIsHere.percent
             );
 
             res.status(200).json(result_Users_Admin);
