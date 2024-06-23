@@ -232,7 +232,7 @@ Content-Type: application/json
 }
 
 ###Busca usuarios en un grupo
-GET http://localhost:3030/api/group/2/users
+GET http://localhost:3030/api/group/1/users
 Content-Type: application/json
 
 ###Recupera grupos de un usuario

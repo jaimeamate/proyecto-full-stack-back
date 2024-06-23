@@ -52,10 +52,11 @@ const getUsers_Of_Group = async (req, res) => {
             const result_Users = await finally_Find_Users(array_Of_Users);
             const result_Users_Admin = await admin_Find_Users(
                 result_Users,
-                adminIsHere.idUser,
-                adminIsHere.percent
+                adminIsHere.idUser
             );
-
+            const result_final = result_Users_Admin.map(u => {
+               
+            } )
             res.status(200).json(result_Users_Admin);
         } else {
             throw new Error("Group without users");

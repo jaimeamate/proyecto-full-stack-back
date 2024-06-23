@@ -199,8 +199,7 @@ const admin_Find_Users = async (result_Users, AdminIs, percent) => {
 
     return usersWithIsAdmin.map((user) => ({
         ...user,
-        isAdmin: user.id === AdminIs,
-        percent: percent
+        isAdmin: user.id === AdminIs
     }));
 };
 
