@@ -15,6 +15,7 @@ const {
   getActivity_Of_Group,
   delete_Users_Of_Group,
   change_Admin_Of_Group,
+  deleteActivity_Of_Group,
 } = require("@controllers/userHasGroupsController");
 
 //Obtiene los grupos
@@ -46,6 +47,9 @@ router.get("/users/:id_user/group", getGroup_Of_User);
 
 //recupero ACTIVIDAD de un grupo
 router.get("/:id_group/activity", getActivity_Of_Group);
+
+//delete ACTIVIDADES de un grupo
+router.delete("/:id_group/activity", deleteActivity_Of_Group);
 
 //borro USUARIOS de un grupo
 router.delete("/:id_group/users", delete_Users_Of_Group);

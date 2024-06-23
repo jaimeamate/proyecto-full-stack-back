@@ -9,6 +9,7 @@ const {
   change_Admin_Has_Group,
   finally_Find_Users,
   admin_Find_Users,
+  finally_Del_Activ_Of_Groups,
 } = require("@services/userHasGroupServices");
 const { finally_Find_Groups } = require("../services/userHasGroupServices");
 
@@ -164,6 +165,24 @@ const change_Admin_Of_Group = async (req, res) => {
   }
 };
 
+const deleteActivity_Of_Group = async (req, res) => {
+  const groupId = req.params.id_group;
+  console.log("Este grupo " + groupId);
+
+  if (!groupId) {
+    return res.status(400).json({ error: "Invalid input data" });
+  }
+
+  const groups = await getGroupWithId(groupId);
+
+  if (!groups) {
+    return res.status(400).json({ error: "Group not found" });
+  }
+
+  const result = await finally_Del_Activ_Of_Groups(groupId);
+  res.status(200).json(result);
+};
+
 module.exports = {
   postUsers_Group,
   getUsers_Of_Group,
@@ -172,4 +191,5 @@ module.exports = {
   getActivity_Of_Group,
   delete_Users_Of_Group,
   change_Admin_Of_Group,
+  deleteActivity_Of_Group,
 };

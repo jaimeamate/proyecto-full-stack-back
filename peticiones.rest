@@ -225,8 +225,11 @@ GET http://localhost:3030/api/group/users/5/group
 
 
 ###Recupera ACTIVIDAD de un grupo
-GET http://localhost:3030/api/group/5/activity
+GET http://localhost:3030/api/group/11/activity
 
+
+###Delete ACTIVIDAD de un grupo <=====>
+DELETE http://localhost:3030/api/group/11/activity
 
 ###Quita algunos usuarios y agrega otros
 PATCH http://localhost:3030/api/group/11/users/change

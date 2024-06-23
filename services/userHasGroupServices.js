@@ -322,6 +322,20 @@ const change_Admin_Has_Group = async (newAdmin, oldAdmin, groupId) => {
   }
 };
 
+const finally_Del_Activ_Of_Groups = async (id) => {
+  try {
+    const result = await Activity.destroy({
+      where: {
+        idGroup: id,
+      },
+    });
+    return result;
+    //return { message: "Activity of Group " + id + " deleted successfully" };
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   register_User_has_Group,
   find_Users_of_Group,
@@ -335,4 +349,5 @@ module.exports = {
   finally_Find_Groups,
   finally_Find_Users,
   admin_Find_Users,
+  finally_Del_Activ_Of_Groups,
 };
