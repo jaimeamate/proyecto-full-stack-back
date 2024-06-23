@@ -236,12 +236,21 @@ const patch_Users_Has_Groups = async (groupId, userId, percent) => {
             throw new Error("Some users to insert not found");
         }
 
-        const hasgroupUpdate = userId.map((userId, index) => ({
-            idUser: userId,
-            idGroup: groupId,
-            percent: percent[index]
-        }));
-        return await UsersHasGroups.bulkCreate(hasgroupUpdate, { updateOnDuplicate: ['percent'] });
+        // Actualiza el percent para cada usuario en el grupo
+        const updatePromises = userId.map((userId, index) => {
+            return UsersHasGroups.update(
+                { percent: percent[index] },
+                {
+                    where: {
+                        idUser: userId,
+                        idGroup: groupId
+                    }
+                }
+            );
+        });
+
+        // Ejecuta todas las actualizaciones en paralelo
+        await Promise.all(updatePromises);
     } catch (error) {
         console.error(error);
         throw error;
