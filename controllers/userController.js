@@ -1,4 +1,4 @@
-const { getAllUsers, getUserWithId, editUserPatch, editUserPut } = require('@services/userService');
+const { getAllUsers, getUserWithId, editUserPatch, editUserPut, getUserWithEmail } = require('@services/userService');
 const httpStatus = require('@configs/httpStatusCode.json');
 
 
@@ -24,6 +24,20 @@ const getUserById = async (req, res) => {
     }
 }
 
+const getUserByEmail = async (req, res) => {
+    try{
+        const user = await getUserWithEmail(req.params.email);
+        if(user){
+            res.status(200).json(user);
+        }else{
+            res.status(404).json({error: httpStatus['404']});
+        }
+    }catch(err){
+        res.status(500).json(err);
+    }
+}
+
+
 const updateUserPatch = async (req, res) => {
     try{
         res.status(200).json(await editUserPatch(req.params.id, req.body));
@@ -41,4 +55,4 @@ const updateUserPut = async (req, res) => {
         res.status(500).json(err);
     }
 }
-module.exports = { getUsers, getUserById, updateUserPatch, updateUserPut };
+module.exports = { getUsers, getUserById, updateUserPatch, updateUserPut, getUserByEmail };

@@ -5,16 +5,66 @@ const {
   Activity,
   sequelize,
 } = require("@models/index");
+
 const { getGroupWithId } = require("./groupService");
 const { getUserWithId } = require("./userService");
 const { Sequelize, Op } = require("sequelize");
+const nodemailer = require("nodemailer");
+const path = require("path");
+const ejs = require("ejs");
+require("dotenv").config();
 
-const register_User_has_Group = async (userIds, GroupId) => {
-  try {
-    if (!Array.isArray(userIds) || !GroupId) {
-      throw new Error("Invalid input");
+let transporter = nodemailer.createTransport({
+  service: "outlook",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+const sendEmail = (to, subject, htmlContent) => {
+  let mailOptions = {
+    from: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+    to,
+    subject,
+    html: htmlContent,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.error("Error al enviar el correo:", error);
     }
+    console.log("Correo enviado:", info.response);
+  });
+};
 
+// const renderHtml = async (userEmail, groupName) => {
+//     try {
+//         let templatePath = path.join(__dirname, '../html', 'invitation.ejs');
+//         console.log('Template Path:', templatePath); // Depuración
+//         const html = await ejs.renderFile(templatePath, {userEmail, groupName});
+//         console.log('HTML Rendered:', html); // Depuración
+//         return html;
+//     } catch (error) {
+//         console.error('Error al renderizar el HTML:', error);
+//         return '<p>Error loading HTML content</p>';
+//     }
+// };
+
+const renderHtml = async (template, data) => {
+  try {
+    let templatePath = path.join(__dirname, "../html", "invitation.ejs");
+    const html = await ejs.renderFile(templatePath, data);
+    return html;
+  } catch (error) {
+    console.error("Error al renderizar el HTML:", error);
+    return "<p>Error loading HTML content</p>";
+  }
+};
+
+const register_User_has_Group = async (userId, GroupId, percent) => {
+  try {
     const hasgroup = await Group.findByPk(GroupId);
 
     if (!hasgroup) {
@@ -22,22 +72,25 @@ const register_User_has_Group = async (userIds, GroupId) => {
     }
 
     // Verifica que todos los usuarios existen
-    const users = await User.findAll({
-      where: {
-        id: userIds,
-      },
-    });
+    const user = await User.findByPk(userId);
 
-    if (users.length !== userIds.length) {
+    if (user.dataValues.id !== userId) {
       throw new Error("Some users not found");
     }
 
-    const userGroups = userIds.map((userId) => ({
+    const email = user.email;
+    const groupName = hasgroup.name;
+    const htmlContent = await renderHtml(email, { groupName, email });
+    console.log("Sending email to:", email, "with content:", htmlContent); // Depuración
+    sendEmail(email, `Invitación a grupo ${hasgroup.name}`, htmlContent);
+
+    const userGroup = {
       idUser: userId,
       idGroup: GroupId,
-    }));
+      percent: percent,
+    };
 
-    return await UsersHasGroups.bulkCreate(userGroups);
+    return await UsersHasGroups.create(userGroup);
   } catch (error) {
     console.error(error);
     throw error;
@@ -154,9 +207,9 @@ const register_Admin = async (name) => {
   }
 };
 
-const patch_Users_Has_Groups = async (groupId, usersIn, usersOut) => {
+const patch_Users_Has_Groups = async (groupId, usersIn, percent) => {
   try {
-    if (!Array.isArray(usersOut) || !Array.isArray(usersIn) || !groupId) {
+    if (!Array.isArray(usersIn) || !groupId) {
       throw new Error("Invalid input");
     }
 
@@ -177,26 +230,14 @@ const patch_Users_Has_Groups = async (groupId, usersIn, usersOut) => {
       throw new Error("Some users to insert not found");
     }
 
-    // Verifica que todos los usuarios para sacar existan
-    const outUsers = await UsersHasGroups.findAll({
-      where: {
-        idUser: {
-          [Sequelize.Op.in]: usersOut,
-        },
-        idGroup: groupId,
-      },
-    });
-
-    if (outUsers.length !== usersOut.length) {
-      throw new Error("Some users to delete not found");
-    }
-
-    const userToInsert = usersIn.map((userId) => ({
+    const hasgroupUpdate = usersIn.map((userId) => ({
       idUser: userId,
       idGroup: groupId,
+      percent: percent,
     }));
-    const out = await out_Users(usersOut, groupId);
-    return await UsersHasGroups.bulkCreate(userToInsert);
+    return await UsersHasGroups.bulkCreate(hasgroupUpdate, {
+      updateOnDuplicate: ["percent"],
+    });
   } catch (error) {
     console.error(error);
     throw error;
@@ -349,5 +390,4 @@ module.exports = {
   finally_Find_Groups,
   finally_Find_Users,
   admin_Find_Users,
-  finally_Del_Activ_Of_Groups,
 };

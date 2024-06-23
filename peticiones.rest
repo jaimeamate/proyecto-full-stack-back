@@ -8,8 +8,8 @@ Content-Type: application/json
   "firstName": "paepas",
   "lastName": "antoania",
   "phoneNumber": "123456789",
-  "email": "aaaa@aasdagmaaail.com",
-  "password": "1111",
+  "email": "franolmosdev@gmail.com",
+  "password": "1234",
   "ind_baja": true
 
 }
@@ -79,7 +79,7 @@ Content-Type: application/json
 GET http://localhost:3030/api/activity/
 
 ### Obtener actividades por su id
-GET http://localhost:3030/api/activity/1
+GET http://localhost:3030/api/activity/4
 
 
 ### Modificar actividades put
@@ -101,7 +101,7 @@ Content-Type: application/json
  "idGroup": 5
 }
 
-### eliminar actividad (MIDDLEWARE)
+### eliminar actividad 
 DELETE  http://localhost:3030/api/activity/1
 
 
@@ -137,7 +137,7 @@ POST http://localhost:3030/api/group/register/3
 Content-Type: application/json
 
 {
-  "name": "Los Angeles"
+  "name": "aaaaaaal"
 }
 
 ###OBTENER GRUPOS
@@ -145,10 +145,10 @@ GET http://localhost:3030/api/group/
 
 
 ### Obtener GRUPO por su id
-GET http://localhost:3030/api/group/5
+GET http://localhost:3030/api/group/11
 
 ### Modificar GRUPO patch
-PATCH http://localhost:3030/api/group/7
+PATCH http://localhost:3030/api/group/1
 Content-Type: application/json
 
 {
@@ -166,9 +166,9 @@ Content-Type: application/json
 
 {
     "service": "outlook",
-    "user": "sandra_prueba_full@hotmail.com",
-    "pass": "Prueba88",
-    "to": "folmos@everycode.es",
+    "user": "jaime-prueba-8899@outlook.com",
+    "pass": "prueba8899",
+    "to": "jaimeamate@hotmail.com",
     "subject": "prueba desde Outlook",
     "text": "esto es una prueba desde Outlook11"
 }
@@ -193,35 +193,50 @@ Content-Type: application/json
 POST http://localhost:3030/api/activity/4/add-users
 Content-Type: application/json
 
-{
-  "userIds": [11, 12]
-}
 ### Actualiza usuarios de una actividad
-PATCH http://localhost:3030/api/activity/4/update-users
+PATCH http://localhost:3031/api/activity/7/update-users
 Content-Type: application/json
 
 {
-  "userIds": [7, 9]
+  "userIds": [5]
 }
 
 ### Obtiene los usuarios de una actividad
-GET http://localhost:3030/api/activity/4/users
+GET http://localhost:3031/api/activity/10/users
 
 ##############################    ENDPOINTS user_has_groups    ##############################
 ### Añade un usuario a un grupo
-POST http://localhost:3030/api/group/11/add_user
+POST http://localhost:3030/api/group/1/add_user
 Content-Type: application/json
 
 {
-    "userIds":[3,4]
+    "userIds":[1],
+    "email":"jdeking14@gmail.com",
+    "percent":10
+}
+###PARA MODIFICAR USER HAS GROUPS
+PATCH http://localhost:3030/api/group/1/users/change
+Content-Type: application/json
+
+{
+    "usersIn":[1,2],
+    "groupId":"2",
+    "percent":20
+}
+### Añade un usuario a un grupo
+POST http://localhost:3030/api/group/226/add_user
+Content-Type: application/json
+
+{
+    "email": "test@test.com"
 }
 
 ###Busca usuarios en un grupo
-GET http://localhost:3030/api/group/11/users
+GET http://localhost:3030/api/group/226/users
 Content-Type: application/json
 
 ###Recupera grupos de un usuario
-GET http://localhost:3030/api/group/users/5/group
+GET http://localhost:3030/api/group/users/21/group
 
 
 ###Recupera ACTIVIDAD de un grupo
@@ -232,12 +247,12 @@ GET http://localhost:3030/api/group/11/activity
 DELETE http://localhost:3030/api/group/11/activity
 
 ###Quita algunos usuarios y agrega otros
-PATCH http://localhost:3030/api/group/11/users/change
+PATCH http://localhost:3030/api/group/5/users/change
 Content-Type: application/json
 
 {
-    "usersIn":[1,2],
-    "usersOut":[3,4]
+    "usersIn":[7],
+    "usersOut":[13]
 }
 
 ### Borro usuarios de un grupo
@@ -259,7 +274,12 @@ Content-Type: application/json
 }
 
 
+###Invitación a usuarios
+POST http://localhost:3030/api/group/11/invitation
+Content-Type: application/json
 
-
+{
+  "emails": ["foasdasds@everycode.es", "frdasdasdasdsdev@gmail.com"]
+}
 
 

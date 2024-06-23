@@ -1,8 +1,28 @@
-const { Activity, Group } = require("@models/index");
+const { Activity, User, UsersHasActivities, Group } = require("@models/index");
 
 const getAllActivity = async () => {
   try {
-    return await Activity.findAll();
+    const activities = await Activity.findAll({
+      include: [
+        {
+          model: User,
+          as: 'users',
+          through: UsersHasActivities,
+          attributes: ['id', 'firstName', 'email'],
+        },
+      ],
+    });
+
+    // Calcula el porcentaje que cada usuario debe pagar y elimina el campo 'users_has_activities'
+    activities.forEach(activity => {
+      const userCount = activity.users.length;
+      activity.users.forEach(user => {
+        user.dataValues.amount = (activity.amount / userCount).toFixed(2);
+        delete user.dataValues.users_has_activities;
+      });
+    });
+
+    return activities;
   } catch (err) {
     throw err;
   }
@@ -10,11 +30,28 @@ const getAllActivity = async () => {
 
 const getActivityWithId = async (id) => {
   try {
-    const activity = await Activity.findByPk(id);
+    const activity = await Activity.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: 'users',
+          through: UsersHasActivities,
+          attributes: ['id', 'firstName', 'email'],
+        },
+      ],
+    });
+
     if (!activity) {
-      console.log("eror");
       throw new Error("Activity not found");
     }
+
+    // Calcula el porcentaje que cada usuario debe pagar y elimina el campo 'users_has_activities'
+    const userCount = activity.users.length;
+    activity.users.forEach(user => {
+      user.dataValues.amount = (activity.amount / userCount).toFixed(2);
+      delete user.dataValues.users_has_activities;
+    });
+
     return activity;
   } catch (err) {
     throw err;
@@ -73,9 +110,9 @@ const editActivityPatch = async (id, updatedFields) => {
   }
 };
 
-const registerActivity = async ({ idGroup, name, amount, type, date }) => {
+const registerActivity = async ({ idGroup, name, amount, type, date, idPayer }) => {
   try {
-    const newActivity = new Activity({ idGroup, name, amount, type, date });
+    const newActivity = new Activity({ idGroup, name, amount, type, date, idPayer });
     return await newActivity.save();
   } catch (err) {
     console.log(err);

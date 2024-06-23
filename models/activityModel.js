@@ -28,6 +28,11 @@ const Activity = sequelize.define("Activity", {
         type: DataTypes.DATE,
         allowNull: false,
     },
+    idPayer: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        default : 0 
+    },
 
 }, { timestamps: false }); //hay que ponerlo porque sino añade los campos en el sql
 

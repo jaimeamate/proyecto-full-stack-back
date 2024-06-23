@@ -22,7 +22,7 @@ const getUserWithId = async(id) => {
 }
 
 
-const getUserByEmail = async (email) => {
+const getUserWithEmail = async (email) => {
     try {
         const user = await User.findOne({where: {email: email}});
         if (!user) {
@@ -66,4 +66,4 @@ const editUserPatch = async (userId, updatedFields) => {
         throw err;
     }
 }
-module.exports = {  getAllUsers, getUserWithId, getUserByEmail, editUserPut, editUserPatch };
+module.exports = {  getAllUsers, getUserWithId, getUserWithEmail, editUserPut, editUserPatch };
