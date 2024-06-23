@@ -19,6 +19,7 @@ const postUsers_Group = async (req, res) => {
         // console.log(req.body)
         const { email } = req.body;
         const idGroup = req.params.id_group;
+        const percent = req.body.percent;
         // VER SI EL EMAIL EXISTE EN LA BBDD
         // console.log(email)
         const {dataValues: user} = await getUserWithEmail(email)
@@ -32,7 +33,7 @@ const postUsers_Group = async (req, res) => {
         //     return res.status(400).json({ error: "Invalid input data" });
         // }
 
-        const result = await register_User_has_Group(user.id, idGroup);
+        const result = await register_User_has_Group(user.id, idGroup, percent);
         res.status(200).json(result);
     } catch (err) {
         console.error(err);
@@ -82,15 +83,14 @@ const getGroup_Of_User = async (req, res) => {
 
 const change_User_Has_Group = async (req, res) => {
     try {
-        const { usersIn, usersOut } = req.body;
+        const { usersIn } = req.body;
         const groupId = req.params.id_group;
+        const percent = req.body.percent;
 
         if (
             !groupId ||
             !Array.isArray(usersIn) ||
-            !Array.isArray(usersOut) ||
-            usersIn.length === 0 ||
-            usersOut.length === 0
+            usersIn.length === 0 
         ) {
             return res.status(400).json({ error: "Invalid input data" });
         }
@@ -98,11 +98,8 @@ const change_User_Has_Group = async (req, res) => {
         const adminIs = await findAdminIs(groupId);
         adminIsHere = JSON.parse(adminIs);
 
-        if (usersOut.includes(adminIsHere.idUser)) {
-            return res.status(400).json({ error: "Is an Admin to delete" });
-        }
 
-        const result = await patch_Users_Has_Groups(groupId, usersIn, usersOut);
+        const result = await patch_Users_Has_Groups(groupId, usersIn, percent);
         res.status(200).json(result);
     } catch (err) {
         console.error(err);

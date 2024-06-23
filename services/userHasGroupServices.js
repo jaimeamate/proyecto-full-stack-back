@@ -63,7 +63,7 @@ const renderHtml = async (template, data) => {
     }
 };
 
-const register_User_has_Group = async (userId, GroupId) => {
+const register_User_has_Group = async (userId, GroupId, percent) => {
     try {
 
 
@@ -92,6 +92,7 @@ const register_User_has_Group = async (userId, GroupId) => {
         const userGroup = {
             idUser: userId,
             idGroup: GroupId,
+            percent: percent
         };
         
 
@@ -212,9 +213,9 @@ const register_Admin = async (name) => {
     }
 };
 
-const patch_Users_Has_Groups = async (groupId, usersIn, usersOut) => {
+const patch_Users_Has_Groups = async (groupId, usersIn, percent) => {
     try {
-        if (!Array.isArray(usersOut) || !Array.isArray(usersIn) || !groupId) {
+        if (!Array.isArray(usersIn) || !groupId) {
             throw new Error("Invalid input");
         }
 
@@ -235,26 +236,12 @@ const patch_Users_Has_Groups = async (groupId, usersIn, usersOut) => {
             throw new Error("Some users to insert not found");
         }
 
-        // Verifica que todos los usuarios para sacar existan
-        const outUsers = await UsersHasGroups.findAll({
-            where: {
-                idUser: {
-                    [Sequelize.Op.in]: usersOut,
-                },
-                idGroup: groupId,
-            },
-        });
-
-        if (outUsers.length !== usersOut.length) {
-            throw new Error("Some users to delete not found");
-        }
-
-        const userToInsert = usersIn.map((userId) => ({
+        const hasgroupUpdate = usersIn.map((userId) => ({
             idUser: userId,
             idGroup: groupId,
+            percent: percent
         }));
-        const out = await out_Users(usersOut, groupId);
-        return await UsersHasGroups.bulkCreate(userToInsert);
+        return await UsersHasGroups.bulkCreate(hasgroupUpdate, { updateOnDuplicate: ['percent'] });
     } catch (error) {
         console.error(error);
         throw error;

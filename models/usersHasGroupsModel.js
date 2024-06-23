@@ -13,6 +13,11 @@ const UsersHasGroups = sequelize.define(
       primaryKey: true,
     },
     isAdmin: DataTypes.BOOLEAN,
+    percent: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      default : 0
+  }
   },
   {
     freezeTableName: true,
