@@ -55,9 +55,14 @@ const getUsers_Of_Group = async (req, res) => {
                 adminIsHere.idUser
             );
             const result_final = result_Users_Admin.map(u => {
-               
-            } )
-            res.status(200).json(result_Users_Admin);
+                const userPercent = result.find(item => item.dataValues.idUser === u.id);
+                return {
+                    ...u,
+                    percent: userPercent ? userPercent.dataValues.percent : null
+                };
+            });
+
+            res.status(200).json(result_final);
         } else {
             throw new Error("Group without users");
         }
