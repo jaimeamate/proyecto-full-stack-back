@@ -83,23 +83,25 @@ const getGroup_Of_User = async (req, res) => {
 
 const change_User_Has_Group = async (req, res) => {
     try {
-        const { usersIn } = req.body;
+        const payload = req.body;
         const groupId = req.params.id_group;
-        const percent = req.body.percent;
 
         if (
             !groupId ||
-            !Array.isArray(usersIn) ||
-            usersIn.length === 0 
+            !Array.isArray(payload) ||
+            payload.length === 0 
         ) {
             return res.status(400).json({ error: "Invalid input data" });
         }
+
+        const userIds = payload.map(user => user.userId);
+        const percents = payload.map(user => user.percent);
         // empiezo el control de admin
         const adminIs = await findAdminIs(groupId);
         adminIsHere = JSON.parse(adminIs);
 
 
-        const result = await patch_Users_Has_Groups(groupId, usersIn, percent);
+        const result = await patch_Users_Has_Groups(groupId, userIds, percents);
         res.status(200).json(result);
     } catch (err) {
         console.error(err);

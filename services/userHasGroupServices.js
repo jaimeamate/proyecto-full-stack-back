@@ -213,9 +213,9 @@ const register_Admin = async (name) => {
     }
 };
 
-const patch_Users_Has_Groups = async (groupId, usersIn, percent) => {
+const patch_Users_Has_Groups = async (groupId, userId, percent) => {
     try {
-        if (!Array.isArray(usersIn) || !groupId) {
+        if (!Array.isArray(userId) || !groupId) {
             throw new Error("Invalid input");
         }
 
@@ -228,18 +228,18 @@ const patch_Users_Has_Groups = async (groupId, usersIn, percent) => {
         // Verifica que todos los usuarios para ingresar existan
         const inUsers = await User.findAll({
             where: {
-                id: usersIn,
+                id: userId,
             },
         });
 
-        if (inUsers.length !== usersIn.length) {
+        if (inUsers.length !== userId.length) {
             throw new Error("Some users to insert not found");
         }
 
-        const hasgroupUpdate = usersIn.map((userId) => ({
+        const hasgroupUpdate = userId.map((userId, index) => ({
             idUser: userId,
             idGroup: groupId,
-            percent: percent
+            percent: percent[index]
         }));
         return await UsersHasGroups.bulkCreate(hasgroupUpdate, { updateOnDuplicate: ['percent'] });
     } catch (error) {
