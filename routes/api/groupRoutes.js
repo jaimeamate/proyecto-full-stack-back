@@ -49,7 +49,7 @@ router.get("/users/:id_user/group", getGroup_Of_User);
 router.get("/:id_group/activity", getActivity_Of_Group);
 
 //borro USUARIOS de un grupo
-router.delete("/:id_group/users", delete_Users_Of_Group);
+router.post("/:id_group/users", delete_Users_Of_Group);
 
 //saca usuarios y agrega a un grupo
 router.patch("/:id_group/users/change", change_User_Has_Group);
