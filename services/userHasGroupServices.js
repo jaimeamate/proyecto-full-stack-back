@@ -207,41 +207,48 @@ const register_Admin = async (name) => {
   }
 };
 
-const patch_Users_Has_Groups = async (groupId, usersIn, percent) => {
+const patch_Users_Has_Groups = async (groupId, userId, percent) => {
   try {
-    if (!Array.isArray(usersIn) || !groupId) {
-      throw new Error("Invalid input");
-    }
+      if (!Array.isArray(userId) || !groupId) {
+          throw new Error("Invalid input");
+      }
 
-    const hasgroup = await Group.findByPk(groupId);
+      const hasgroup = await Group.findByPk(groupId);
 
-    if (!hasgroup) {
-      throw new Error("Group not found");
-    }
+      if (!hasgroup) {
+          throw new Error("Group not found");
+      }
 
-    // Verifica que todos los usuarios para ingresar existan
-    const inUsers = await User.findAll({
-      where: {
-        id: usersIn,
-      },
-    });
+      // Verifica que todos los usuarios para ingresar existan
+      const inUsers = await User.findAll({
+          where: {
+              id: userId,
+          },
+      });
 
-    if (inUsers.length !== usersIn.length) {
-      throw new Error("Some users to insert not found");
-    }
+      if (inUsers.length !== userId.length) {
+          throw new Error("Some users to insert not found");
+      }
 
-    const hasgroupUpdate = usersIn.map((userId) => ({
-      idUser: userId,
-      idGroup: groupId,
-      percent: percent,
-    }));
-    return await UsersHasGroups.bulkCreate(hasgroupUpdate, {
-      updateOnDuplicate: ["percent"],
-    });
+      // Actualiza el percent para cada usuario en el grupo
+      const updatePromises = userId.map((userId, index) => {
+          return UsersHasGroups.update(
+              { percent: percent[index] },
+              {
+                  where: {
+                      idUser: userId,
+                      idGroup: groupId
+                  }
+              }
+          );
+      });
+
+      // Ejecuta todas las actualizaciones en paralelo
+      await Promise.all(updatePromises);
   } catch (error) {
-    console.error(error);
-    throw error;
-  }
+      console.error(error);
+      throw error;
+    }
 };
 
 const out_Users = async (usersOut, groupId) => {
