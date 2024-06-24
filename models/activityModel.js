@@ -1,0 +1,47 @@
+//modelo de la base de datos
+const { DataTypes } = require('sequelize');
+const sequelize = require("@configs/dbConfig");
+
+const Activity = sequelize.define("Activity", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+    },
+    idGroup: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    amount: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+    },
+    type: {
+        type: DataTypes.BOOLEAN,
+    },
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    idPayer: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        default : 0 
+    },
+
+}, { timestamps: false }); //hay que ponerlo porque sino añade los campos en el sql
+
+Activity.associate = (models) => {
+  Activity.belongsToMany(models.User, {through: models.UsersHasActivities, foreignKey: 'idActivitie' });
+};
+
+module.exports = Activity;
+
+
+
+

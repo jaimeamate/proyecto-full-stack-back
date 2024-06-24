@@ -1,0 +1,287 @@
+##############################    ENDPOINTS USER    ##############################
+
+### Crear / Registrar usuario
+POST http://localhost:3030/api/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "paepas",
+  "lastName": "antoania",
+  "phoneNumber": "123456789",
+  "email": "franolmosdev@gmail.com",
+  "password": "1234",
+  "ind_baja": true
+
+}
+
+### Obtener usuarios
+GET http://localhost:3030/api/user/
+
+### Obtener usuario por su id
+
+GET http://localhost:3030/api/user/6
+
+
+
+### Modificar usuario put
+PUT http://localhost:3030/api/user/5
+Content-Type: application/json
+
+{
+  "firstName": "antonio",
+  "lastName": "rico",
+  "phoneNumber": "111111111",
+  "email": "antonio@gmail.com",
+  "pass": "1111"
+}
+
+
+### Modificar usuario patch
+PATCH http://localhost:3030/api/user/5
+Content-Type: application/json
+
+{
+  "lastName": "Martinez",
+  "phoneNumber": "88232542588"
+}
+
+### Login que devuelve el jwt
+### Login
+POST http://localhost:3030/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "pepdderodaaa@gmail.com",
+  "password": "123456"
+}
+
+### Obtener usuarios con jwt
+GET http://localhost:3030/api/user/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo5LCJlbWFpbCI6Imp3dHRlc3QxQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxNTUzODU0MCwiZXhwIjoxNzE1NTQyMTQwfQ.acg58ni5p1k1D-Q_7Lxt3dSH1Un23IiHQVWCqtA_BkM
+
+
+################## ACTIVITIES  ##################
+
+### Crear / Registrar actividades
+POST http://localhost:3030/api/activity/register
+Content-Type: application/json
+
+{
+  "idGroup": 12,
+  "name": "BOLICHE",
+  "amount": "60",
+  "type": "1",
+  "date": "2024-05-01"
+}
+
+
+### Obtener actividades
+GET http://localhost:3030/api/activity/
+
+### Obtener actividades por su id
+GET http://localhost:3030/api/activity/4
+
+
+### Modificar actividades put
+PUT http://localhost:3030/api/activity/1
+Content-Type: application/json
+
+{
+  "name": "Vacaciones Ibiza",
+  "amount": "333",
+  "type": "0",
+  "date": "2023-08-01"
+}
+
+### Modificar actividades patch (MIDDLEWARE)
+PATCH http://localhost:3030/api/activity/1
+Content-Type: application/json
+
+{
+ "idGroup": 5
+}
+
+### eliminar actividad 
+DELETE  http://localhost:3030/api/activity/1
+
+
+##############################    ENDPOINTS USER    ##############################
+
+### Añade usuarios a una activdad
+POST http://localhost:3030/api/activity/add-users
+Content-Type: application/json
+
+{
+    "idActivity": 2,
+    "userIds": [5]
+}
+
+### Actualiza usuarios de una actividad
+PATCH http://localhost:3030/api/activity/4/update-users
+Content-Type: application/json
+
+{
+  "userIds": [6, 9]
+}
+
+### Obtiene los usuarios de una actividad
+GET http://localhost:3030/api/activity/4/users
+
+
+
+
+##############################    ENDPOINTS GROUPS    ##############################
+
+### Crear grupos
+POST http://localhost:3030/api/group/register/3
+Content-Type: application/json
+
+{
+  "name": "aaaaaaal"
+}
+
+###OBTENER GRUPOS
+GET http://localhost:3030/api/group/
+
+
+### Obtener GRUPO por su id
+GET http://localhost:3030/api/group/11
+
+### Modificar GRUPO patch
+PATCH http://localhost:3030/api/group/1
+Content-Type: application/json
+
+{
+  "name": "Viaje Rio CLARO"
+  
+}
+
+### Modificar GRUPO patch
+DELETE  http://localhost:3030/api/group/14
+
+
+### Envío de correo de prueba desde Outlook
+POST http://localhost:3030/api/mail/send
+Content-Type: application/json
+
+{
+    "service": "outlook",
+    "user": "jaime-prueba-8899@outlook.com",
+    "pass": "prueba8899",
+    "to": "jaimeamate@hotmail.com",
+    "subject": "prueba desde Outlook",
+    "text": "esto es una prueba desde Outlook11"
+}
+
+### Añade usuarios a una activdad
+
+
+### Envío de correo de prueba desde Gmail
+POST http://localhost:3031/api/mail/send
+Content-Type: application/json
+
+{
+    "service": "gmail",
+    "user": "tu_correo_gmail@gmail.com",
+    "pass": "tu_contraseña_gmail",
+    "to": "destinatario@ejemplo.com",
+    "subject": "prueba desde Gmail",
+    "text": "esto es una prueba desde Gmail"
+}
+
+### Añade usuarios a una activdad
+POST http://localhost:3030/api/activity/4/add-users
+Content-Type: application/json
+
+### Actualiza usuarios de una actividad
+PATCH http://localhost:3031/api/activity/7/update-users
+Content-Type: application/json
+
+{
+  "userIds": [5]
+}
+
+### Obtiene los usuarios de una actividad
+GET http://localhost:3031/api/activity/10/users
+
+##############################    ENDPOINTS user_has_groups    ##############################
+### Añade un usuario a un grupo
+POST http://localhost:3030/api/group/11/add_user
+Content-Type: application/json
+
+{
+    "userIds":[5],
+    "email":"pepasas@gmaaail.com",
+    "percent":10
+}
+###PARA MODIFICAR USER HAS GROUPS
+PATCH http://localhost:3030/api/group/1/users/change
+Content-Type: application/json
+
+{
+    "usersIn":[3],
+    "groupId":"2",
+    "percent":20
+}
+### Añade un usuario a un grupo
+POST http://localhost:3030/api/group/226/add_user
+Content-Type: application/json
+
+{
+    "email": "test@test.com"
+}
+
+###Busca usuarios en un grupo
+GET http://localhost:3030/api/group/11/users
+Content-Type: application/json
+
+###Recupera grupos de un usuario
+GET http://localhost:3030/api/group/users/3/group
+
+
+###Recupera ACTIVIDAD de un grupo
+GET http://localhost:3030/api/group/25/activity
+
+
+###Delete ACTIVIDAD de un grupo <=====>
+DELETE http://localhost:3030/api/group/25/activity
+
+
+
+###Quita algunos usuarios y agrega otros
+PATCH http://localhost:3030/api/group/5/users/change
+Content-Type: application/json
+
+{
+    "usersIn":[7],
+    "usersOut":[13]
+}
+
+### Borro usuarios de un grupo
+DELETE  http://localhost:3030/api/group/11/users
+Content-Type: application/json
+
+{
+    "usersOut":[5,6]
+}
+
+
+###Cambio administrador
+PATCH http://localhost:3030/api/group/11/admin/change
+Content-Type: application/json
+
+{
+    "newAdmin":2,
+    "oldAdmin":5
+}
+
+
+###Invitación a usuarios
+POST http://localhost:3030/api/group/11/invitation
+Content-Type: application/json
+
+{
+  "emails": ["foasdasds@everycode.es", "frdasdasdasdsdev@gmail.com"]
+}
+
+
