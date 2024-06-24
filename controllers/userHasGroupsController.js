@@ -53,7 +53,8 @@ const getUsers_Of_Group = async (req, res) => {
             const result_Users = await finally_Find_Users(array_Of_Users);
             const result_Users_Admin = await admin_Find_Users(
                 result_Users,
-                adminIsHere.idUser
+                adminIsHere.idUser,
+                req.params.id_group
             );
             const result_final = result_Users_Admin.map(u => {
                 const userPercent = result.find(item => item.dataValues.idUser === u.id);

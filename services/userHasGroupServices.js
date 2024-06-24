@@ -185,16 +185,46 @@ const finally_Find_Users = async (id_Of_Users) => {
   }
 };
 
-const admin_Find_Users = async (result_Users, AdminIs, percent) => {
+const admin_Find_Users = async (result_Users, AdminIs, groupId) => {
   const usersWithIsAdmin = result_Users.map((user) => ({
     ...user.dataValues,
     isAdmin: false, // Aquí defines la lógica para determinar isAdmin
+    totalPayed: 0,
   }));
+
+  const userAux = await get_Arr_Activ(groupId);
+  const totalPayedByPayer = {};
+
+  // Itera sobre los objetos filtrados y agrupa los amount por idPayer
+  userAux.forEach((activity) => {
+    const { idPayer, amount } = activity;
+    totalPayedByPayer[idPayer] =
+      (totalPayedByPayer[idPayer] || 0) + parseFloat(amount);
+  });
+
+  usersWithIsAdmin.forEach((arr) => {
+    arr.totalPayed = totalPayedByPayer[arr.id] || 0;
+  });
 
   return usersWithIsAdmin.map((user) => ({
     ...user,
     isAdmin: user.id === AdminIs,
   }));
+};
+
+const get_Arr_Activ = async (id) => {
+  try {
+    const results = await Activity.findAll({
+      attributes: ["idGroup", "amount", "idPayer"],
+      where: {
+        idGroup: id,
+      },
+    });
+    return results.map((activity) => activity.dataValues);
+  } catch (error) {
+    console.error("Error al obtener los datos de Activiti:", error);
+    throw error;
+  }
 };
 
 const register_Admin = async (name) => {
