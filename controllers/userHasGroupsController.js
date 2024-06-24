@@ -8,7 +8,8 @@ const {
     delete_User_has_Group,
     change_Admin_Has_Group,
     finally_Find_Users,
-    admin_Find_Users
+    admin_Find_Users,
+    finally_Del_Activ_Of_Groups
 } = require("@services/userHasGroupServices");
 const { finally_Find_Groups } = require("../services/userHasGroupServices");
 
