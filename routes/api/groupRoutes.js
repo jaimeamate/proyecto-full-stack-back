@@ -16,7 +16,7 @@ const {
   delete_Users_Of_Group,
   change_Admin_Of_Group,
   deleteActivity_Of_Group,
-} = require("@controllers/userHasGroupsController");
+} = require("@controllers/userHasGroupsController.js");
 
 //Obtiene los grupos
 router.get("/", getGroups);

@@ -181,6 +181,24 @@ const change_Admin_Of_Group = async (req, res) => {
     }
 };
 
+const deleteActivity_Of_Group = async (req, res) => {
+    const groupId = req.params.id_group;
+    // faltaria controlar que exista el grupo
+    // no se por que me rompe la ejecucion el control de que exista
+    // y en otros ends anda bien
+    if (!groupId) {
+      return res.status(400).json({ error: "Invalid input data" });
+    }
+  
+    const result_activities = await find_Activity_of_Group(groupId);
+    if (result_activities.length > 0) {
+      const result = await finally_Del_Activ_Of_Groups(groupId);
+      res.status(200).json({ ok: "Activities deleted" });
+    } else {
+      res.status(404).json({ error: "Group without activities" });
+    }
+  };
+
 module.exports = {
     postUsers_Group,
     getUsers_Of_Group,
@@ -188,5 +206,6 @@ module.exports = {
     change_User_Has_Group,
     getActivity_Of_Group,
     delete_Users_Of_Group,
-    change_Admin_Of_Group
+    change_Admin_Of_Group,
+    deleteActivity_Of_Group
 };
